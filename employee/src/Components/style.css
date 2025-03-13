@@ -1,0 +1,263 @@
+.loginPage{
+    background-image:url('/public/Image/emp.jpg');
+    background: linear-gradient(rgba(11,11,11,0.5),rgba(10,10,10,0.5),url('public/Image/emp.jpg'));
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.loginForm{
+    background-color: rgb(100, 149, 237, 0.7);
+    color: white;
+}
+
+ul li :hover{
+    background-color: gray;
+}
+
+.employee_image{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+
+/*  */
+/* General body and page styling */
+.employee-detail-container {
+    background-color: #4f88de; 
+    background: url('https://source.unsplash.com/1600x900/?office,workspace') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    flex-direction: column;
+    overflow: hidden;
+    text-align: center;
+  }
+  
+  /* Header Styling */
+  .header h4 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+  }
+  
+  /* Greeting Message */
+  .greeting h2 {
+    font-size: 32px;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+  
+  /* Employee Details Section */
+  .employee-details {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  /* Employee Image */
+  .employee-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 6px solid #4CAF50;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Employee Info Styling */
+  .employee-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .employee-info h3 {
+    margin: 5px 0;
+    color: #333;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  
+  /* Work Status Section */
+  .pending-status {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .status-circles {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+  }
+  
+  .status-circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+    border: 4px solid #ccc;
+    color: white;
+  }
+  
+  .status-circle.pending {
+    background-color: #ff9800;
+  }
+  
+  .status-circle.completed {
+    background-color: #4CAF50;
+  }
+  
+  .status-circle:hover {
+    transform: scale(1.1);
+    border-color: #333;
+  }
+  
+  /* Comment Section Styling */
+  .comment-section {
+    background-color: #f1f1f1;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    color: #333;
+  }
+  
+  .comment-section p {
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  /* Buttons */
+  .action-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .action-buttons button {
+    padding: 12px 30px;
+    font-size: 16px;
+    margin-top: 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .action-buttons .btn-warning {
+    background-color: #ff9800;
+    color: white;
+  }
+  
+  .action-buttons .btn-warning:hover {
+    background-color: #e68900;
+  }
+  
+  .action-buttons .btn-danger {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .action-buttons .btn-danger:hover {
+    background-color: #e53935;
+  }
+  
+  /* Modal for changing status */
+  .status-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    width: 50%;
+    text-align: center;
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2);
+  }
+  
+  textarea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+  }
+  
+  textarea:focus {
+    border-color: #4CAF50;
+  }
+  
+  button {
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Media queries for responsiveness */
+  @media (max-width: 768px) {
+    .employee-details {
+      width: 100%;
+      padding: 20px;
+    }
+  
+    .employee-info {
+      text-align: center;
+    }
+  
+    .status-circle {
+      width: 120px;
+      height: 120px;
+      font-size: 16px;
+    }
+  }
+  
