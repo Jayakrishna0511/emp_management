@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../config";
 
 const AddCategory = () => {
   const [category, setCategory] = useState();
@@ -9,7 +10,7 @@ const AddCategory = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:3000/auth/add-category", { category })
+      .post(`${API_URL}/auth/add-category`, { category })
       .then((result) => {
         if (result.data.Status) {
           navigate("/dashboard/category");

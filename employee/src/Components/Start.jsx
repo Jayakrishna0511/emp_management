@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_URL } from "../config";
 
 const Start = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/verify")
+      .get(`${API_URL}/verify`)
       .then((result) => {
         if (result.data.Status) {
           if (result.data.role === "admin") {

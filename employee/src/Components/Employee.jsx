@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../config";
 
 const Employee = () => {
   const [employee, setEmployee] = useState([]);
@@ -9,7 +10,7 @@ const Employee = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/auth/employee")
+      .get(`${API_URL}/auth/employee`)
       .then((result) => {
         if (result.data.Status) {
           setEmployee(result.data.Result);
@@ -24,7 +25,7 @@ const Employee = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:3000/auth/delete_employee/${id}`)
+      .delete(`${API_URL}/auth/delete_employee/${id}`)
       .then((res) => {
         if (res.data.Status) {
           window.location.reload();
@@ -65,7 +66,7 @@ const Employee = () => {
                 <td>{e.name}</td>
                 <td>
                   <img
-                    src={`http://localhost:3000/Images/` + e.image}
+                    src={`${API_URL}/Images/${e.image}`}
                     className="employee_image"
                     style={{ maxWidth: "50px", maxHeight: "50px" }}
                     alt="employee"

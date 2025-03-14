@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './style.css';
+import { API_URL } from '../config';
 
 const EmployeeDetail = () => {
   const [employee, setEmployee] = useState({});
@@ -16,7 +17,7 @@ const EmployeeDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/employee/detail/${id}`)
+      .get(`${API_URL}/employee/detail/${id}`)
       .then((result) => {
         setEmployee(result.data[0]);
       })
@@ -26,7 +27,7 @@ const EmployeeDetail = () => {
   }, [id]);
 
   const handleLogout = () => {
-    axios.get('http://localhost:3000/employee/logout')
+    axios.get(`${API_URL}/employee/logout`)
       .then(result => {
         if (result.data.Status) {
           localStorage.removeItem("valid");
@@ -78,7 +79,7 @@ const EmployeeDetail = () => {
 
       <div className="employee-details d-flex justify-content-center flex-column align-items-center mt-5">
         <div className="employee-image">
-          <img src={`http://localhost:3000/Images/` + employee.image} alt="Employee" className="emp-img" />
+          <img src={`${API_URL}/Images/` + employee.image} alt="Employee" className="emp-img" />
         </div>
 
         <div className="employee-info mt-4">

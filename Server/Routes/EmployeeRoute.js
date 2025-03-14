@@ -2,14 +2,8 @@ import express from "express";
 import connection from "../utils/db.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-// import cors from 'cors'
-// let app=express()
 const router = express.Router();
 
-// app.use(cors({
-//   origin: 'http://localhost:5173',  // Allow only frontend origin
-//   credentials: true,  // Allow cookies/credentials if necessary
-// }))
 
 router.post("/employee_login", (req, res) => {
     const mysql2 = "SELECT * from employee where email=?";

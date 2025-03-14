@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './style.css';  
+import { API_URL } from '../config';
+
 
 const Login = () => {
     const [values, setValues] = useState({
@@ -15,7 +17,7 @@ const Login = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:3000/auth/adminlogin', values)
+        axios.post(`${API_URL}/auth/adminlogin`, values)
             .then(result => {
                 if (result.data.loginStatus) {
                     localStorage.setItem("valid", true); 

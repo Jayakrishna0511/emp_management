@@ -3,13 +3,14 @@ import { Link, Outlet } from 'react-router-dom'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { API_URL } from '../config'
 
 const Dashboard = () => {
   const navigate = useNavigate();
   axios.defaults.withCredentials = true;
 
   const handleLogout = () => {
-    axios.get('http://localhost:3000/auth/logout')
+    axios.get(`${API_URL}/auth/logout`)
       .then(result => {
         if (result.data.Status) {
           localStorage.removeItem("valid");

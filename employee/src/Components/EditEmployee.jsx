@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';  
 import axios from 'axios';
+import { API_URL } from '../config';
 
 const EditEmployee = () => {
   const { id } = useParams();  // used to take id from URL
@@ -16,7 +17,7 @@ const EditEmployee = () => {
 
   // Fetch categories and employee data
   useEffect(() => {
-    axios.get('http://localhost:3000/auth/category')
+    axios.get(`${API_URL}/auth/category`)
       .then(result => {
         if (result.data.Status) {
           setCategory(result.data.Result);  
@@ -29,7 +30,7 @@ const EditEmployee = () => {
         console.log(err);
       });
 
-    axios.get('http://localhost:3000/auth/employee/' + id)
+    axios.get(`${API_URL}/auth/employee/ ${id}`)
       .then(result => {
         if (result.data.Status) {
           const employeeData = result.data.Result && result.data.Result[0];
@@ -58,7 +59,7 @@ const EditEmployee = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.put(`http://localhost:3000/auth/edit-employee/` + id, employee)
+    axios.put(`${API_URL}/auth/edit-employee/` + id, employee)
       .then(result => {  
         // console.log(result);  
         if (result.data.Status) {

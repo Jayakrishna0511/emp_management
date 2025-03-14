@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../config";
 
 const AddEmployee = () => {
   const [employee, setEmployee] = useState({
@@ -46,7 +47,7 @@ const AddEmployee = () => {
     formData.append("category_id", employee.category_id); 
 
     axios
-      .post("http://localhost:3000/auth/add-employee", formData)
+      .post(`${API_URL}/auth/add-employee`, formData)
       .then((result) => {
         if (result.data.Status) {
           navigate("/dashboard/employee");

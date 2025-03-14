@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Modal, Button, Form } from 'react-bootstrap';  
+import { API_URL } from '../config';
 
 const Home = () => {
   const [adminTotal, setAdminTotal] = useState(0);
@@ -23,18 +24,18 @@ const Home = () => {
   }, []);
 
   const AdminRecords = () => {
-    axios.get('http://localhost:3000/auth/admin_records')
+    axios.get(`${API_URL}/auth/admin_records`)
       .then(result => {
         if (result.data.Status) {
           setAdmins(result.data.Result); 
         } else {
-          toast.error(result.data.Error);  // Display error toast
+          toast.error(result.data.Error);  
         }
       });
   };
 
   const adminCount = () => {
-    axios.get('http://localhost:3000/auth/admin_count')
+    axios.get(`${API_URL}/auth/admin_count`)
       .then(result => {
         if (result.data.Status) {
           setAdminTotal(result.data.Result[0].admin); 
@@ -43,7 +44,7 @@ const Home = () => {
   };
 
   const employeeCount = () => {
-    axios.get('http://localhost:3000/auth/employee_count')
+    axios.get(`${API_URL}/auth/employee_count`)
       .then(result => {
         if (result.data.Status) {
           setEmployeeTotal(result.data.Result[0].employee);
@@ -52,7 +53,7 @@ const Home = () => {
   };
 
   const salaryCount = () => {
-    axios.get('http://localhost:3000/auth/salary_count')
+    axios.get(`${API_URL}/auth/salary_count`)
       .then(result => {
         if (result.data.Status) {
           setSalaryTotal(result.data.Result[0].salaryOfEmp);
@@ -81,7 +82,7 @@ const Home = () => {
       password: newPassword || undefined, // Only send password if it's changed
     };
 
-    axios.put(`http://localhost:3000/auth/edit-admin/${selectedAdmin.id}`, data)
+    axios.put(`${API_URL}/auth/edit-admin/${selectedAdmin.id}`, data)
       .then(result => {
         if (result.data.Status) {
           toast.success("Admin updated successfully!");
@@ -101,7 +102,7 @@ const Home = () => {
   const deleteAdmin = (id) => {
     const confirmation = window.confirm("Are you sure you want to delete this admin?");
     if (confirmation) {
-      axios.delete(`http://localhost:3000/auth/delete-admin/${id}`)
+      axios.delete(`${API_URL}/auth/delete-admin/${id}`)
         .then(result => {
           if (result.data.Status) {
             toast.success("Admin deleted successfully!");
