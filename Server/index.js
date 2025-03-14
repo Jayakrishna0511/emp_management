@@ -4,6 +4,8 @@ import  Jwt  from 'jsonwebtoken';
 import { AdminRouter } from './Routes/AdminRoute.js'; 
 import { EmployeeRouter } from './Routes/EmployeeRoute.js';
 import cookieParser from 'cookie-parser';
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 
@@ -40,6 +42,8 @@ app.get('/verify',verifyUser,(req,res)=>{
 
 })
 
-app.listen(3000, () => {
-    console.log("Server started bhai");
+let PORT = process.env.PORT || 3000;
+
+app.listen(PORT,() => {
+    console.log("Server has been started");
 });

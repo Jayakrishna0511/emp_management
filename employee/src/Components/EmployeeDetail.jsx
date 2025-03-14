@@ -98,7 +98,6 @@ const EmployeeDetail = () => {
             </div>
           </div>
 
-          {/* Display the comment if saved */}
           {savedComment && (
             <div className="comment-section mt-3">
               <strong>Comment:</strong>

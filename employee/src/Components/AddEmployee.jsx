@@ -42,8 +42,8 @@ const AddEmployee = () => {
     formData.append("password", employee.password);
     formData.append("address", employee.address);
     formData.append("salary", employee.salary);
-    formData.append("image", employee.image); // **Fix: Append image file correctly**
-    formData.append("category_id", employee.category_id); // **Fix: Added category_id to FormData**
+    formData.append("image", employee.image); 
+    formData.append("category_id", employee.category_id); 
 
     axios
       .post("http://localhost:3000/auth/add-employee", formData)
@@ -61,9 +61,8 @@ const AddEmployee = () => {
       })
       .catch((err) => {
         console.error(err);
-        // Display error message from the backend if available
         const errorMessage = err.response?.data?.Error || "An unexpected error occurred";
-        alert(errorMessage);  // Show error message
+        alert(errorMessage);  
       });
   };
 

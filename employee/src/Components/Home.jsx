@@ -116,7 +116,6 @@ const Home = () => {
 
   return (
     <div>
-      {/* Admin, Employee, Salary Stats - Make it responsive */}
       <div className='p-3 d-flex flex-column flex-sm-row justify-content-around mt-3'>
         <div className='px-3 pt-2 pb-3 border shadow-sm w-100 w-sm-25 mb-3 mb-sm-0'>
           <div className='text-center pb-1'>

@@ -31,7 +31,6 @@ const Category = () => {
             </div>
 
             <div className='mt-3'>
-                {/* Table with responsiveness */}
                 <div className="table-responsive">
                     <table className='table table-striped'>
                         <thead>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './style.css';  // Ensure that this file contains your background image styling.
+import './style.css';  
 
 const Login = () => {
     const [values, setValues] = useState({
@@ -13,13 +13,12 @@ const Login = () => {
 
     axios.defaults.withCredentials = true;
 
-    // Existing login form submit handler
     const handleSubmit = (event) => {
         event.preventDefault();
         axios.post('http://localhost:3000/auth/adminlogin', values)
             .then(result => {
                 if (result.data.loginStatus) {
-                    localStorage.setItem("valid", true); // Mark the user as valid (logged in)
+                    localStorage.setItem("valid", true); 
                     navigate('/dashboard');
                 } else {
                     setError(result.data.Error);
@@ -28,10 +27,9 @@ const Login = () => {
             .catch(err => console.log(err));
     };
 
-    // Guest Login handler
     const handleGuestLogin = () => {
-        localStorage.setItem("valid", true); // Mark as logged in as a guest
-        navigate('/dashboard');  // Redirect to Admin Dashboard (you can change this to employee_dashboard)
+        localStorage.setItem("valid", true); 
+        navigate('/dashboard');  
     };
 
     return (
