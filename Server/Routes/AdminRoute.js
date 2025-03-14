@@ -252,7 +252,7 @@ router.get('/verify',verifyUser, (req, res) => {
       return res.status(500).json({ Status: false, Error: "Database query failed" });
     }
 
-    const admin = result;
+    const admin = result[0];
     res.json({
       Status: true,
       name: admin.name,
