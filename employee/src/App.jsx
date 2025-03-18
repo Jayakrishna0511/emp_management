@@ -16,11 +16,12 @@ import EmployeeDetail from './Components/EmployeeDetail';
 import PrivateRoute from './Components/PrivateRoute';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { CookiesProvider } from 'react-cookie';
 function App() {
 
   return (
     <>
+     <CookiesProvider defaultSetOptions={{ path: '/' }}>
       <BrowserRouter>
         <Routes>
         <Route path='/' element={<Start />} />                
@@ -50,6 +51,7 @@ function App() {
 
         
       </BrowserRouter>
+      </CookiesProvider>
     </>
   )
 }

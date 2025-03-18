@@ -6,12 +6,15 @@ import { Card } from 'react-bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
 import './Profile.css';  
 import { API_URL } from '../config';
+import { useCookies } from "react-cookie";
 
 const Profile = () => {
+  const [cookies] = useCookies(["token"]);
+  
   const [adminData, setAdminData] = useState({
-    name: 'abhi',
-    email: 'abhi@gmail.com',
-    role: 'admin',
+    name: '',
+    email: '',
+    role: '',
     lastLogin: null,
   });
   const navigate = useNavigate();
@@ -19,12 +22,15 @@ const Profile = () => {
   useEffect(() => {
     const fetchAdminData = async () => {
       try {
-        // Request to backend with credentials (cookies with token)
-        const result = await axios.get(`${API_URL}/auth/verify`,{ withCredentials: true });
+        const result = await axios.get(`${API_URL}/auth/verify`,{
+          headers: {
+            Authorization: `Bearer ${cookies.token}`  
+        }
+        }
+          
+        )
         console.log(result);
-
-        // If the token is valid and the user is an admin
-        if (result.data.Status) {
+        if (result.data.role==="admin") {
           setAdminData({
             name: result.data.name,
             email: result.data.email,
@@ -36,10 +42,10 @@ const Profile = () => {
           // navigate('/adminlogin');
         }
       } catch (error) {
-        toast.error('Failed to fetch admin details. Please try again.');
-        if (error.response && error.response.status === 401) {
-          navigate('/adminlogin');
-        }
+        // toast.error('Failed to fetch admin details. Please try again.');
+        // if (error.response && error.response.status === 401) {
+          // navigate('/adminlogin');
+        // }
       }
     };
 
@@ -76,3 +82,5 @@ const Profile = () => {
 };
 
 export default Profile;
+
+

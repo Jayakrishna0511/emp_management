@@ -76,7 +76,7 @@ const EditEmployee = () => {
 
   return (
     <div className="d-flex justify-content-center align-items-center mt-3">
-      <div className="p-3 rounded w-100 w-sm-75 w-md-50 w-lg-25 border">
+      <div className="p-3 rounded  w-sm-75 w-md-50 w-lg-25 border">
         <h2>Edit Employee</h2>
         <form className="row g-3" onSubmit={handleSubmit}>
           {/* Name */}

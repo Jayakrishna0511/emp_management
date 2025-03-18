@@ -12,7 +12,7 @@ dotenv.config();
 
 // Admin Login Route
 router.post("/adminlogin", (req, res) => {
-  const mysql2 = "SELECT * from admin where email=? and password =?";
+  const mysql2 = "SELECT * from employee.admin where email=? and password =?";
   connection.query(
     mysql2,
     [req.body.email, req.body.password],
@@ -25,8 +25,8 @@ router.post("/adminlogin", (req, res) => {
           process.env.JWT_SECRET,
           { expiresIn: "1d" }
         );
-        res.cookie("token", token,{httpOnly:true});
-        return res.json({ loginStatus: true });
+        // res.cookie("token", token,{httpOnly:true});
+        return res.json({ loginStatus: true ,"token":token});
       } else {
         return res.json({ loginStatus: false, Error: "invalid credentials" });
       }
@@ -226,7 +226,10 @@ router.delete('/delete-admin/:id', (req, res) => {
 //*************************************************** */ for profile page
 
 const verifyUser = (req, res, next) => {
-  const token = req.cookies.token; // Get the token from the cookies
+  // const token = req.cookies.token; // Get the token from the cookies
+ // Extract token 
+ let token = req.cookies.token || req.headers.authorization?.split(" ")[1]; 
+
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {

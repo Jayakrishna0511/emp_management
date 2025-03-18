@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './style.css';  
 import { API_URL } from '../config';
-
+import { useCookies } from 'react-cookie';
 
 const Login = () => {
+    const [cookies, setCookie] = useCookies(["token"]);
+    const [isGuest, setIsGuest] = useState(false);
     const [values, setValues] = useState({
         email: '',
         password: ''
@@ -16,11 +18,16 @@ const Login = () => {
     axios.defaults.withCredentials = true;
 
     const handleSubmit = (event) => {
-        event.preventDefault();
+        if (event) event.preventDefault();
+    
+
         axios.post(`${API_URL}/auth/adminlogin`, values)
             .then(result => {
+                console.log(result, "result");
                 if (result.data.loginStatus) {
-                    localStorage.setItem("valid", true); 
+                    console.log(result.data.token, "result", result);
+                    setCookie("token", result.data.token, { path: "/" });
+                    localStorage.setItem("valid", true);
                     navigate('/dashboard');
                 } else {
                     setError(result.data.Error);
@@ -29,16 +36,27 @@ const Login = () => {
             .catch(err => console.log(err));
     };
 
+    useEffect(() => {
+        if (isGuest) {
+            handleSubmit();
+            setIsGuest(false); // Reset flag after submission
+        }
+    }, [values]);
+    
     const handleGuestLogin = () => {
-        localStorage.setItem("valid", true); 
-        navigate('/dashboard');  
+        localStorage.setItem("valid", true);
+        setError(null);
+    
+        setValues({ email: "test@gmail.com", password: "123456" });
+        setIsGuest(true); // Trigger `useEffect` to call handleSubmit
     };
+ 
 
     return (
         <div className="d-flex justify-content-center align-items-center vh-100 loginPage">
-            <div className="p-3 rounded border loginForm  w-sm-75 w-md-50 w-lg-50">
+            <div className="p-3 rounded border loginForm w-sm-75 w-md-50 w-lg-50">
                 <div className="text-warning">
-                    {error && error}
+                {error ? <div className="text-warning">{error}</div> : null}
                 </div>
                 <h2 className="text-center">Login Page</h2>
                 <form onSubmit={handleSubmit}>
@@ -62,7 +80,7 @@ const Login = () => {
                             onChange={(e) => setValues({ ...values, password: e.target.value })}
                         />
                     </div>
-                    <button className="btn btn-success w-100 rounded-0 mb-2">LOGIN</button>
+                    <button className="btn btn-success w-100 rounded-0 mb-2" type='submit'>LOGIN</button>
                     <div className="mb-1">
                         <input type="checkbox" name="checkbox" id="checkbox" className="me-2" />
                         <label htmlFor="checkbox">Agree Terms & Conditions</label>
@@ -82,3 +100,5 @@ const Login = () => {
 };
 
 export default Login;
+
+
