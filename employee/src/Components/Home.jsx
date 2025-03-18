@@ -177,7 +177,7 @@ const Home = () => {
       </div>
 
       {/* Modal for editing admin details */}
-      <Modal  show={showModal} onHide={handleCloseModal} >
+      <Modal  show={showModal} onHide={handleCloseModal} className='w-100' >
         <Modal.Header closeButton >
           <Modal.Title >Edit Admin</Modal.Title>
         </Modal.Header>
@@ -212,3 +212,11 @@ const Home = () => {
 };
 
 export default Home;
+
+
+
+
+
+
+
+

@@ -39,7 +39,7 @@ const Employee = () => {
   };
 
   return (
-    <div className="container px-5 mt-3">
+    <div className="container px-5 mt-3 ">
       <div className="d-flex justify-content-center mb-3">
         <h3>Employee List</h3>
       </div>
