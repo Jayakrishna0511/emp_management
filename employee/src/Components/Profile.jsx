@@ -71,7 +71,7 @@ const Profile = () => {
               <h5>
                 Last Login: {adminData.lastLogin
                   ? new Date(adminData.lastLogin).toLocaleString()
-                  : 'N/A'}
+                  : 'Recently'}
               </h5>
             </div>
           </div>
