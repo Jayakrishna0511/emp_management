@@ -262,7 +262,6 @@ router.get('/verify',verifyUser, (req, res) => {
       email: admin.email,
       role: admin.role,
       lastLogin: admin.lastLogin,
-      name:"profile"
     });
   });
 });
