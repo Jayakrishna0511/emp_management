@@ -1,9 +1,9 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { Modal, Button, Form } from 'react-bootstrap';  
-import { API_URL } from '../config';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { Modal, Button, Form } from "react-bootstrap";
+import { API_URL } from "../config";
 
 const Home = () => {
   const [adminTotal, setAdminTotal] = useState(0);
@@ -12,8 +12,8 @@ const Home = () => {
   const [admins, setAdmins] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedAdmin, setSelectedAdmin] = useState(null);
-  const [newEmail, setNewEmail] = useState('');
-  const [newPassword, setNewPassword] = useState('');
+  const [newEmail, setNewEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,50 +24,46 @@ const Home = () => {
   }, []);
 
   const AdminRecords = () => {
-    axios.get(`${API_URL}/auth/admin_records`)
-      .then(result => {
-        if (result.data.Status) {
-          setAdmins(result.data.Result); 
-        } else {
-          toast.error(result.data.Error);  
-        }
-      });
+    axios.get(`${API_URL}/auth/admin_records`).then((result) => {
+      if (result.data.Status) {
+        setAdmins(result.data.Result);
+      } else {
+        toast.error(result.data.Error);
+      }
+    });
   };
 
   const adminCount = () => {
-    axios.get(`${API_URL}/auth/admin_count`)
-      .then(result => {
-        if (result.data.Status) {
-          setAdminTotal(result.data.Result[0].admin); 
-        }
-      });
+    axios.get(`${API_URL}/auth/admin_count`).then((result) => {
+      if (result.data.Status) {
+        setAdminTotal(result.data.Result[0].admin);
+      }
+    });
   };
 
   const employeeCount = () => {
-    axios.get(`${API_URL}/auth/employee_count`)
-      .then(result => {
-        if (result.data.Status) {
-          setEmployeeTotal(result.data.Result[0].employee);
-        }
-      });
+    axios.get(`${API_URL}/auth/employee_count`).then((result) => {
+      if (result.data.Status) {
+        setEmployeeTotal(result.data.Result[0].employee);
+      }
+    });
   };
 
   const salaryCount = () => {
-    axios.get(`${API_URL}/auth/salary_count`)
-      .then(result => {
-        if (result.data.Status) {
-          setSalaryTotal(result.data.Result[0].salaryOfEmp);
-        } else {
-          toast.error(result.data.Error); 
-        }
-      });
+    axios.get(`${API_URL}/auth/salary_count`).then((result) => {
+      if (result.data.Status) {
+        setSalaryTotal(result.data.Result[0].salaryOfEmp);
+      } else {
+        toast.error(result.data.Error);
+      }
+    });
   };
 
   const handleEdit = (admin) => {
     setSelectedAdmin(admin);
-    setNewEmail(admin.email); 
-    setNewPassword(''); 
-    setShowModal(true); 
+    setNewEmail(admin.email);
+    setNewPassword("");
+    setShowModal(true);
   };
 
   const handleSaveChanges = () => {
@@ -81,8 +77,9 @@ const Home = () => {
       password: newPassword || undefined,
     };
 
-    axios.put(`${API_URL}/auth/edit-admin/${selectedAdmin.id}`, data)
-      .then(result => {
+    axios
+      .put(`${API_URL}/auth/edit-admin/${selectedAdmin.id}`, data)
+      .then((result) => {
         if (result.data.Status) {
           toast.success("Admin updated successfully!");
           AdminRecords();
@@ -91,7 +88,7 @@ const Home = () => {
           toast.error(result.data.Error);
         }
       })
-      .catch(err => toast.error("Error updating admin: " + err.message));
+      .catch((err) => toast.error("Error updating admin: " + err.message));
   };
 
   const handleCloseModal = () => {
@@ -99,10 +96,13 @@ const Home = () => {
   };
 
   const deleteAdmin = (id) => {
-    const confirmation = window.confirm("Are you sure you want to delete this admin?");
+    const confirmation = window.confirm(
+      "Are you sure you want to delete this admin?"
+    );
     if (confirmation) {
-      axios.delete(`${API_URL}/auth/delete-admin/${id}`)
-        .then(result => {
+      axios
+        .delete(`${API_URL}/auth/delete-admin/${id}`)
+        .then((result) => {
           if (result.data.Status) {
             toast.success("Admin deleted successfully!");
             AdminRecords();
@@ -110,50 +110,50 @@ const Home = () => {
             toast.error(result.data.Error);
           }
         })
-        .catch(err => toast.error("Error deleting admin: " + err.message));
+        .catch((err) => toast.error("Error deleting admin: " + err.message));
     }
   };
 
   return (
     <div>
-      <div className='p-3 d-flex flex-column flex-sm-row justify-content-around mt-3'>
-        <div className='px-3 pt-2 pb-3 border shadow-sm w-100 w-sm-25 mb-3 mb-sm-0'>
-          <div className='text-center pb-1'>
+      <div className="p-3 d-flex flex-column flex-sm-row justify-content-around mt-3">
+        <div className="px-3 pt-2 pb-3 border shadow-sm w-100 w-sm-25 mb-3 mb-sm-0">
+          <div className="text-center pb-1">
             <h4>ADMIN</h4>
           </div>
           <hr />
-          <div className='d-flex justify-content-between'>
+          <div className="d-flex justify-content-between">
             <h5>Total:</h5>
             <h5>{adminTotal}</h5>
           </div>
         </div>
 
-        <div className='px-3 pt-2 pb-3 border shadow-sm w-100 w-sm-25 mb-3 mb-sm-0'>
-          <div className='text-center pb-1'>
+        <div className="px-3 pt-2 pb-3 border shadow-sm w-100 w-sm-25 mb-3 mb-sm-0">
+          <div className="text-center pb-1">
             <h4>Employee</h4>
           </div>
           <hr />
-          <div className='d-flex justify-content-between'>
+          <div className="d-flex justify-content-between">
             <h5>Total:</h5>
             <h5>{employeeTotal}</h5>
           </div>
         </div>
 
-        <div className='px-3 pt-2 pb-3 border shadow-sm w-100 w-sm-25'>
-          <div className='text-center pb-1'>
+        <div className="px-3 pt-2 pb-3 border shadow-sm w-100 w-sm-25">
+          <div className="text-center pb-1">
             <h4>Salary</h4>
           </div>
           <hr />
-          <div className='d-flex justify-content-between'>
+          <div className="d-flex justify-content-between">
             <h5>Total:</h5>
             <h5>{salaryTotal}₹</h5>
           </div>
         </div>
       </div>
 
-      <div className='mt-4 px-3 px-md-5 pt-3'>
+      <div className="mt-4 px-3 px-md-5 pt-3">
         <h3>List Of Admins</h3>
-        <table className='table table-responsive'>
+        <table className="table table-responsive">
           <thead>
             <tr>
               <th>Email</th>
@@ -161,18 +161,26 @@ const Home = () => {
             </tr>
           </thead>
           <tbody>
-            {admins.map(a => (
+            {admins.map((a) => (
               <tr key={a.id}>
                 <td>{a.email}</td>
                 <td>
-                  <button className="btn btn-info btn-sm me-2" onClick={() => handleEdit(a)}>
-                    <i className="bi bi-pencil d-inline d-md-none"></i>
-                    <span className="d-none d-md-inline">EDIT</span>
-                  </button>
-                  <button className="btn btn-warning btn-sm" onClick={() => deleteAdmin(a.id)}>
-                    <i className="bi bi-trash d-inline d-md-none"></i>
-                    <span className="d-none d-md-inline">DELETE</span>
-                  </button>
+                  <div className="d-flex gap-2">
+                    <button
+                      className="btn btn-info btn-sm"
+                      onClick={() => handleEdit(a)}
+                    >
+                      <i className="bi bi-pencil d-inline d-md-none"></i>
+                      <span className="d-none d-md-inline">EDIT</span>
+                    </button>
+                    <button
+                      className="btn btn-warning btn-sm"
+                      onClick={() => deleteAdmin(a.id)}
+                    >
+                      <i className="bi bi-trash d-inline d-md-none"></i>
+                      <span className="d-none d-md-inline">DELETE</span>
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -180,7 +188,7 @@ const Home = () => {
         </table>
       </div>
 
-      <Modal show={showModal} onHide={handleCloseModal} className='w-100'>
+      <Modal show={showModal} onHide={handleCloseModal} className="w-100">
         <Modal.Header closeButton>
           <Modal.Title>Edit Admin</Modal.Title>
         </Modal.Header>
@@ -204,7 +212,9 @@ const Home = () => {
                 placeholder="Enter new password (leave blank to keep unchanged)"
               />
             </Form.Group>
-            <Button variant="primary" onClick={handleSaveChanges}>Save Changes</Button>
+            <Button variant="primary" onClick={handleSaveChanges}>
+              Save Changes
+            </Button>
           </Form>
         </Modal.Body>
       </Modal>

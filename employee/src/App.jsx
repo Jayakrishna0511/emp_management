@@ -31,7 +31,6 @@ function App() {
             <Route path='/employee_detail/:id' element={<EmployeeDetail />} />
           <Route path='/dashboard' element={
             <PrivateRoute>
-
               <Dashboard />
             </PrivateRoute>
             }>
