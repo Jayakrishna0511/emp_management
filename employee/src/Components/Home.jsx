@@ -65,9 +65,9 @@ const Home = () => {
 
   const handleEdit = (admin) => {
     setSelectedAdmin(admin);
-    setNewEmail(admin.email); // pre-fill the current email
-    setNewPassword(''); // reset the password field
-    setShowModal(true); // show the modal
+    setNewEmail(admin.email); 
+    setNewPassword(''); 
+    setShowModal(true); 
   };
 
   const handleSaveChanges = () => {
@@ -76,18 +76,17 @@ const Home = () => {
       return;
     }
 
-    // Prepare data for submission
     const data = {
       email: newEmail,
-      password: newPassword || undefined, // Only send password if it's changed
+      password: newPassword || undefined,
     };
 
     axios.put(`${API_URL}/auth/edit-admin/${selectedAdmin.id}`, data)
       .then(result => {
         if (result.data.Status) {
           toast.success("Admin updated successfully!");
-          AdminRecords();  // Refresh the list of admins
-          setShowModal(false);  // Close the modal
+          AdminRecords();
+          setShowModal(false);
         } else {
           toast.error(result.data.Error);
         }
@@ -96,7 +95,7 @@ const Home = () => {
   };
 
   const handleCloseModal = () => {
-    setShowModal(false);  // Close the modal
+    setShowModal(false);
   };
 
   const deleteAdmin = (id) => {
@@ -135,7 +134,7 @@ const Home = () => {
           </div>
           <hr />
           <div className='d-flex justify-content-between'>
-            <h5>Total :</h5>
+            <h5>Total:</h5>
             <h5>{employeeTotal}</h5>
           </div>
         </div>
@@ -146,13 +145,12 @@ const Home = () => {
           </div>
           <hr />
           <div className='d-flex justify-content-between'>
-            <h5>Total :</h5>
+            <h5>Total:</h5>
             <h5>{salaryTotal}₹</h5>
           </div>
         </div>
       </div>
 
-      {/* Admin List - Table */}
       <div className='mt-4 px-3 px-md-5 pt-3'>
         <h3>List Of Admins</h3>
         <table className='table table-responsive'>
@@ -167,8 +165,14 @@ const Home = () => {
               <tr key={a.id}>
                 <td>{a.email}</td>
                 <td>
-                  <button className="btn btn-info btn-sm me-2" onClick={() => handleEdit(a)}>EDIT</button>
-                  <button className="btn btn-warning btn-sm" onClick={() => deleteAdmin(a.id)}>DELETE</button>
+                  <button className="btn btn-info btn-sm me-2" onClick={() => handleEdit(a)}>
+                    <i className="bi bi-pencil d-inline d-md-none"></i>
+                    <span className="d-none d-md-inline">EDIT</span>
+                  </button>
+                  <button className="btn btn-warning btn-sm" onClick={() => deleteAdmin(a.id)}>
+                    <i className="bi bi-trash d-inline d-md-none"></i>
+                    <span className="d-none d-md-inline">DELETE</span>
+                  </button>
                 </td>
               </tr>
             ))}
@@ -176,10 +180,9 @@ const Home = () => {
         </table>
       </div>
 
-      {/* Modal for editing admin details */}
-      <Modal  show={showModal} onHide={handleCloseModal} className='w-100' >
-        <Modal.Header closeButton >
-          <Modal.Title >Edit Admin</Modal.Title>
+      <Modal show={showModal} onHide={handleCloseModal} className='w-100'>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Admin</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -201,9 +204,7 @@ const Home = () => {
                 placeholder="Enter new password (leave blank to keep unchanged)"
               />
             </Form.Group>
-            <Button variant="primary" onClick={handleSaveChanges}>
-              Save Changes
-            </Button>
+            <Button variant="primary" onClick={handleSaveChanges}>Save Changes</Button>
           </Form>
         </Modal.Body>
       </Modal>
@@ -212,11 +213,3 @@ const Home = () => {
 };
 
 export default Home;
-
-
-
-
-
-
-
-

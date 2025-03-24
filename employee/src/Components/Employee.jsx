@@ -39,7 +39,7 @@ const Employee = () => {
   };
 
   return (
-    <div className="container px-5 mt-3 ">
+    <div className="container px-5 mt-3">
       <div className="d-flex justify-content-center mb-3">
         <h3>Employee List</h3>
       </div>
@@ -76,18 +76,37 @@ const Employee = () => {
                 <td>{e.address}</td>
                 <td>{e.salary}</td>
                 <td>
-                  <Link
-                    to={`/dashboard/edit-employee/` + e.id}
-                    className="btn btn-info btn-sm me-2"
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    className="btn btn-warning btn-sm"
-                    onClick={() => handleDelete(e.id)}
-                  >
-                    Delete
-                  </button>
+                  {/* Large devices: show text buttons */}
+                  <div className="d-none d-md-flex">
+                    <Link
+                      to={`/dashboard/edit-employee/${e.id}`}
+                      className="btn btn-info btn-sm me-2"
+                    >
+                      Edit
+                    </Link>
+                    <button
+                      className="btn btn-warning btn-sm"
+                      onClick={() => handleDelete(e.id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+
+                  {/* Small devices: show icons side by side */}
+                  <div className="d-flex d-md-none">
+                    <Link
+                      to={`/dashboard/edit-employee/${e.id}`}
+                      className="btn btn-info btn-sm me-2"
+                    >
+                      <i className="fas fa-edit"></i>
+                    </Link>
+                    <button
+                      className="btn btn-warning btn-sm"
+                      onClick={() => handleDelete(e.id)}
+                    >
+                      <i className="fas fa-trash-alt"></i>
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -99,13 +118,3 @@ const Employee = () => {
 };
 
 export default Employee;
-
-
-
-
-
-
-
-
-
-

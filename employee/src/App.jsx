@@ -17,6 +17,7 @@ import PrivateRoute from './Components/PrivateRoute';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { CookiesProvider } from 'react-cookie';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 function App() {
 
   return (
