@@ -33,6 +33,11 @@ app.use(cookieParser())
 app.use('/auth', AdminRouter);
 app.use('/employee',EmployeeRouter)
 app.use(express.static('Public'))
+app.get("/",(req,res
+  
+)=>{
+    res.send("root api is working")
+})
 
 
 let PORT = process.env.PORT || 3000;
