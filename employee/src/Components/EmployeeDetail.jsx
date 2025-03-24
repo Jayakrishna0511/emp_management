@@ -1,16 +1,18 @@
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './style.css';
+import './EmployeeDetail.css';
 import { API_URL } from '../config';
+import FadeContent from '../Components/Animations/Animation.jsx'
 
 const EmployeeDetail = () => {
   const [employee, setEmployee] = useState({});
   const [pendingStatus, setPendingStatus] = useState(true);
   const [comment, setComment] = useState('');
-  const [savedComment, setSavedComment] = useState('');  // To store saved comment
+  const [savedComment, setSavedComment] = useState('');
   const [statusModalOpen, setStatusModalOpen] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -18,12 +20,8 @@ const EmployeeDetail = () => {
   useEffect(() => {
     axios
       .get(`${API_URL}/employee/detail/${id}`)
-      .then((result) => {
-        setEmployee(result.data[0]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then(result => setEmployee(result.data[0]))
+      .catch(err => toast.error("Error fetching employee details."));
   }, [id]);
 
   const handleLogout = () => {
@@ -34,108 +32,90 @@ const EmployeeDetail = () => {
           navigate('/');
         }
       })
-      .catch(err => console.log(err));
+      .catch(err => toast.error("Logout failed."));
   };
 
   const handleStatusChange = (newStatus) => {
     setPendingStatus(newStatus);
-    toast.success(`Work status updated to ${newStatus ? 'Pending' : 'Completed'}.`);
+    toast.success(`Status updated to ${newStatus ? 'Pending' : 'Completed'}.`);
     setStatusModalOpen(false);
-  };
-
-  const handleCommentChange = (event) => {
-    setComment(event.target.value);
   };
 
   const handleSaveStatus = () => {
-    if (comment.trim() === "") {
-      toast.error("Please add a comment before saving the status.");
+    if (!comment.trim()) {
+      toast.error("Comment is required.");
       return;
     }
-    
-    setSavedComment(comment);  // Save the comment to display it
-    toast.success('Commented successfully!');  // Show success toast
+    setSavedComment(comment);
+    toast.success("Status and comment saved.");
     setStatusModalOpen(false);
-    setComment('');  // Reset the comment input field
+    setComment('');
   };
 
-  // Function to get the greeting message based on the time of day
   const getGreetingMessage = () => {
-    const currentHour = new Date().getHours();
-    if (currentHour < 12) return "Good Morning";
-    if (currentHour < 17) return "Good Afternoon";
-    return "Good Evening";
+    const hour = new Date().getHours();
+    return hour < 12 ? "Good Morning" : hour < 17 ? "Good Afternoon" : "Good Evening";
   };
 
   return (
+      <FadeContent blur={true} duration={1000} easing="ease-out" initialOpacity={0}>
     <div className="employee-detail-container">
-      <div className="header">
-        <h4>Employee Management System</h4>
-      </div>
+      <main className="employee-detail-main">
+        <header className="header">
+          <h2>{getGreetingMessage()}, {employee.name}</h2>
+        </header>
 
-      <div className="greeting mt-3 text-center">
-        <h2>{getGreetingMessage()}, {employee.name}!</h2>
-      </div>
-
-      <div className="employee-details d-flex justify-content-center flex-column align-items-center mt-5">
-        <div className="employee-image">
-          <img src={`${API_URL}/Images/` + employee.image} alt="Employee" className="emp-img" />
-        </div>
-
-        <div className="employee-info mt-4">
-          <h3><strong>Name:</strong> {employee.name}</h3>
-          <h3><strong>Email:</strong> {employee.email}</h3>
-          <h3><strong>Salary:</strong> ₹{employee.salary}</h3>
-        </div>
-
-        <div className="pending-status mt-4">
-          <h5>Work Status:</h5>
-          <div className="status-circles">
-            <div
-              className={`status-circle ${pendingStatus ? 'pending' : 'completed'}`}
-              onClick={() => setStatusModalOpen(true)}
-            >
-              {pendingStatus ? 'Pending' : 'Completed'}
-            </div>
+        <div className="employee-detail-card">
+          <div className="employee-photo">
+            <img src={`${API_URL}/Images/${employee.image}`} alt={employee.name} />
           </div>
+          
+          <div className="employee-info">
+            <h3>{employee.name}</h3>
+            <p><strong>Email:</strong> {employee.email}</p>
+            <p><strong>Salary:</strong> ₹{employee.salary}</p>
 
-          {savedComment && (
-            <div className="comment-section mt-3">
-              <strong>Comment:</strong>
-              <p>{savedComment}</p>
+            <div className="work-status">
+              <span className={`status ${pendingStatus ? 'pending' : 'completed'}`} onClick={() => setStatusModalOpen(true)}>
+                {pendingStatus ? 'Pending' : 'Completed'}
+              </span>
+              {savedComment && (
+                <div className="comment">
+                  <strong>Comment:</strong> <p>{savedComment}</p>
+                </div>
+              )}
             </div>
-          )}
+            
+            <button className="logout-btn" onClick={handleLogout}>Logout</button>
+          </div>
         </div>
-
-        <div className="action-buttons mt-4">
-          <button className="btn btn-warning me-2" onClick={handleLogout}>LOGOUT</button>
-        </div>
-      </div>
+      </main>
 
       {statusModalOpen && (
-        <div className="status-modal">
-          <div className="modal-content">
-            <h5>Edit Work Status</h5>
-            <div>
-              <button onClick={() => handleStatusChange(true)} className="btn btn-warning me-2">Pending</button>
-              <button onClick={() => handleStatusChange(false)} className="btn btn-success">Completed</button>
+        <div className="modal-overlay">
+          <div className="status-modal border">
+            <h4>Edit Work Status</h4>
+            <div className="status-buttons">
+              <button className="btn pending" onClick={() => handleStatusChange(true)}>Pending</button>
+              <button className="btn completed" onClick={() => handleStatusChange(false)}>Completed</button>
             </div>
-            <div className="mt-3">
-              <textarea
-                className="form-control"
-                placeholder="Enter comment for the status change"
-                value={comment}
-                onChange={handleCommentChange}
-              />
-            </div>
-            <div className="mt-3">
-              <button className="btn btn-primary" onClick={handleSaveStatus}>Save Status</button>
-              <button className="btn btn-secondary ms-2" onClick={() => setStatusModalOpen(false)}>Cancel</button>
+            
+            <textarea 
+              placeholder="Add comment..." 
+              value={comment} 
+              onChange={e => setComment(e.target.value)} 
+              className="status-comment"
+            />
+
+            <div className="modal-actions">
+              <button className="btn save" onClick={handleSaveStatus}>Save</button>
+              <button className="btn cancel" onClick={() => setStatusModalOpen(false)}>Cancel</button>
             </div>
           </div>
         </div>
       )}
     </div>
+      </FadeContent>
   );
 };
 
