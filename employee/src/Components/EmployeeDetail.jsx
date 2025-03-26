@@ -76,6 +76,7 @@ const EmployeeDetail = () => {
             <p><strong>Salary:</strong> ₹{employee.salary}</p>
 
             <div className="work-status">
+              <h3><b>work status:</b></h3>
               <span className={`status ${pendingStatus ? 'pending' : 'completed'}`} onClick={() => setStatusModalOpen(true)}>
                 {pendingStatus ? 'Pending' : 'Completed'}
               </span>
