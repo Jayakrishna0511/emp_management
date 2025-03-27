@@ -179,7 +179,7 @@ router.get('/employees/work-details', async (req, res) => {
             `SELECT e.id AS employee_id, e.name AS employee_name, e.email,
                     p.id AS project_id, p.name AS project_name, 
                     p.status, p.pending, p.comments
-             FROM employees e
+             FROM employee e
              LEFT JOIN projects p ON e.id = p.employee_id`
         );
 
