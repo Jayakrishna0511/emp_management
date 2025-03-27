@@ -94,6 +94,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import AdminProjects from "./Components/Projects";
 import EmpProjects from "./Components/EmpProjects";
 import ProjectDetails from "./Components/ProjectDetails";
+import EmployeeWorkDetails from "./Components/EmployeeWorkDetails";
 
 function App() {
   return (
@@ -146,6 +147,7 @@ function App() {
 
               {/* ✅ Added Projects route */}
               <Route path="projects" element={<AdminProjects />} />
+              <Route path="employeeworkdetails" element={<EmployeeWorkDetails />} />
             </Route>
             {/* <Route path='/employee/:id/empprojects' element={<EmpProjects />} /> */}
             <Route path="/employee/:id" element={<EmployeeDetail />} />

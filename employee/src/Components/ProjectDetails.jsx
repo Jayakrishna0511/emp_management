@@ -14,14 +14,14 @@ const ProjectDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/api/employee/${id}/projects`)
+      .get(`${API_URL}/api/projects/${id}`)
       .then((result) => setProject(result.data))
       .catch(() => toast.error("Error fetching project details."));
   }, [id]);
 
   const handleStatusChange = (status) => {
     axios
-      .post(`${API_URL}/api/projects/${id}/status`, { status })
+      .put(`${API_URL}/api/projects/${id}/status`, { status })
       .then(() => {
         toast.success("Status updated!");
         setProject({ ...project, status });
@@ -33,7 +33,7 @@ const ProjectDetails = () => {
     if (!comment.trim()) return toast.error("Comment cannot be empty.");
 
     axios
-      .post(`${API_URL}/api/projects/${id}/comment`, { comment })
+      .put(`${API_URL}/api/projects/${id}/comment`, { comment })
       .then(() => {
         toast.success("Comment added!");
         setProject({ ...project, comments: [...project.comments, comment] });

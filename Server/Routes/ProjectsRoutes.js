@@ -171,4 +171,47 @@ router.put('/projects/:id/comment', async (req, res) => {
     }
 });
 
+
+// Fetch all employees with their assigned projects
+router.get('/employees/work-details', async (req, res) => {
+    try {
+        const [employees] = await db.promise().query(
+            `SELECT e.id AS employee_id, e.name AS employee_name, e.email,
+                    p.id AS project_id, p.name AS project_name, 
+                    p.status, p.pending, p.comments
+             FROM employees e
+             LEFT JOIN projects p ON e.id = p.employee_id`
+        );
+
+        // Group projects under their respective employees
+        const employeeMap = {};
+
+        employees.forEach(row => {
+            if (!employeeMap[row.employee_id]) {
+                employeeMap[row.employee_id] = {
+                    id: row.employee_id,
+                    name: row.employee_name,
+                    email: row.email,
+                    projects: []
+                };
+            }
+
+            if (row.project_id) {
+                employeeMap[row.employee_id].projects.push({
+                    id: row.project_id,
+                    name: row.project_name,
+                    status: row.status,
+                    pending: row.pending,
+                    comments: row.comments
+                });
+            }
+        });
+
+        const result = Object.values(employeeMap);
+        res.json(result);
+    } catch (error) {
+        console.error("Error fetching employee work details:", error);
+        res.status(500).json({ error: "Error fetching employee work details" });
+    }
+});
 export { router as ProjectsRoutes };
