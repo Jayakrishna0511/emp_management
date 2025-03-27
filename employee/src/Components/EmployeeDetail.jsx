@@ -262,9 +262,6 @@
 
 // export default EmployeeDetail;
 
-
-
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
@@ -344,37 +341,71 @@ const EmployeeDetail = () => {
   }
 
   return (
-    <FadeContent blur={true} duration={1000} easing="ease-out" initialOpacity={0}>
+    <FadeContent
+      blur={true}
+      duration={1000}
+      easing="ease-out"
+      initialOpacity={0}
+    >
       <div className="employee-detail-container">
         <main className="employee-detail-main">
           <header className="header">
-            <h2>{getGreetingMessage()}, {employee?.name}</h2>
+            <h2>
+              {getGreetingMessage()}, {employee?.name}
+            </h2>
           </header>
 
           <div className="employee-detail-card">
             <div className="employee-photo">
               <img
-                src={employee?.image ? `${API_URL}/Images/${employee.image}` : "/placeholder.png"}
+                src={
+                  employee?.image
+                    ? `${API_URL}/Images/${employee.image}`
+                    : "/placeholder.png"
+                }
                 alt={employee?.name || "Employee"}
               />
             </div>
 
             <div className="employee-info">
               <h3>Name: {employee?.name}</h3>
-              <p><strong>Email:</strong> {employee?.email}</p>
-              <p><strong>Salary:</strong> ₹{employee?.salary}</p>
-              <p><strong>Category:</strong> {getCategoryName(employee?.category_id)}</p>
+              <p>
+                <strong>Email:</strong> {employee?.email}
+              </p>
+              <p>
+                <strong>Salary:</strong> ₹{employee?.salary}
+              </p>
+              <p>
+                <strong>Category:</strong>{" "}
+                {getCategoryName(employee?.category_id)}
+              </p>
 
-              <button
-                className="projects-btn"
+              {/* <button
+                className="btn btn-primary px-4 py-2"
                 onClick={() => navigate(`/employee/${id}/projects`)}
               >
                 Go to Projects
               </button>
 
-              <button className="logout-btn" onClick={handleLogout}>
+              <button className="logout-btn py-2 px-4" onClick={handleLogout}>
                 Logout
-              </button>
+              </button> */}
+
+              <div className="d-flex gap-3">
+                <button
+                  className="btn btn-primary px-4 py-2"
+                  onClick={() => navigate(`/employee/${id}/projects`)}
+                >
+                  Go to Projects
+                </button>
+
+                <button
+                  className="btn btn-danger px-4 py-2"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </div>
             </div>
           </div>
         </main>

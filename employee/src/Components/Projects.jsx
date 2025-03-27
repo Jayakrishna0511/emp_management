@@ -158,7 +158,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./Projects.css";
-import { API_URL } from "../config"; // Ensure this points to your backend
+import { API_URL } from "../config.jsx"; // Ensure this points to your backend
 
 export const AdminProjects = () => {
   const [projects, setProjects] = useState([]);
@@ -191,7 +191,7 @@ export const AdminProjects = () => {
   const handleAddProject = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${API_URL}/projects`, newProject);
+      const response = await axios.post(`${API_URL}/api/projects`, newProject);
       if (response.data.success) {
         fetchProjects(); // Refresh the projects list
         setNewProject({ name: "", employee_id: "", status: "Pending", pending: true, comments: "" });
