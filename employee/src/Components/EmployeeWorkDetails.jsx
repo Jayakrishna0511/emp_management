@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { API_URL } from "../config.jsx";
+import { API_URL } from "../config"
 import { toast } from "react-toastify";
 
 const EmployeeWorkDetails = () => {

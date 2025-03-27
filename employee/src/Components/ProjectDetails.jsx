@@ -2,21 +2,24 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { API_URL } from "../config.jsx"
+import { API_URL } from "../config.jsx";
 import FadeContent from "../Components/Animations/Animation.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Button } from "react-bootstrap";
 
 const ProjectDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [project, setProject] = useState({});
   const [comment, setComment] = useState("");
+  const [editingIndex, setEditingIndex] = useState(null);
+  const [editText, setEditText] = useState("");
 
   useEffect(() => {
     axios
       .get(`${API_URL}/api/projects/${id}`)
-      .then((result) => setProject(result.data))
-      .catch(() => toast.error("Error fetching project details."));
+      .then((result) => setProject({ ...result.data, comments: result.data.comments || [] }))
+    //   .catch(() => toast.error("Error fetching project details."));
   }, [id]);
 
   const handleStatusChange = (status) => {
@@ -24,7 +27,7 @@ const ProjectDetails = () => {
       .put(`${API_URL}/api/projects/${id}/status`, { status })
       .then(() => {
         toast.success("Status updated!");
-        setProject({ ...project, status });
+        setProject((prev) => ({ ...prev, status }));
       })
       .catch(() => toast.error("Error updating status."));
   };
@@ -36,10 +39,46 @@ const ProjectDetails = () => {
       .put(`${API_URL}/api/projects/${id}/comment`, { comment })
       .then(() => {
         toast.success("Comment added!");
-        setProject({ ...project, comments: [...project.comments, comment] });
+        setProject((prev) => ({
+          ...prev,
+          comments: [...(prev.comments || []), comment],
+        }));
         setComment("");
       })
       .catch(() => toast.error("Error adding comment."));
+  };
+
+  const handleEditComment = (index) => {
+    setEditingIndex(index);
+    setEditText(project.comments[index]);
+  };
+
+  const handleSaveEdit = () => {
+    if (!editText.trim()) return toast.error("Comment cannot be empty.");
+
+    const updatedComments = [...project.comments];
+    updatedComments[editingIndex] = editText;
+
+    axios
+      .put(`${API_URL}/api/projects/${id}/update-comment`, { comment: editText, index: editingIndex })
+      .then(() => {
+        toast.success("Comment updated!");
+        setProject((prev) => ({ ...prev, comments: updatedComments }));
+        setEditingIndex(null);
+      })
+      .catch(() => toast.error("Error updating comment."));
+  };
+
+  const handleLogout = () => {
+    axios
+      .get(`${API_URL}/auth/logout`)
+      .then((result) => {
+        if (result.data.Status) {
+          localStorage.removeItem("valid");
+          navigate("/");
+        }
+      })
+      .catch((error) => console.error("Logout error:", error));
   };
 
   return (
@@ -54,6 +93,7 @@ const ProjectDetails = () => {
             </span>
           </p>
 
+          {/* Status Change Buttons */}
           <div className="d-flex justify-content-center gap-3 my-3">
             <button className="btn btn-warning fw-bold" onClick={() => handleStatusChange("Pending")}>
               Mark Pending
@@ -63,6 +103,7 @@ const ProjectDetails = () => {
             </button>
           </div>
 
+          {/* Comments Section */}
           <h3 className="mt-4 text-secondary">Comments</h3>
           <div className="mb-3">
             <textarea
@@ -73,7 +114,7 @@ const ProjectDetails = () => {
               rows="3"
             />
           </div>
-          <button className="btn btn-primary w-100 fw-bold" onClick={handleAddComment}>
+          <button className="btn btn-primary w-50 d-block mx-auto fw-bold" onClick={handleAddComment}>
             Add Comment
           </button>
 
@@ -81,7 +122,31 @@ const ProjectDetails = () => {
             {project.comments?.length > 0 ? (
               project.comments.map((cmt, index) => (
                 <div key={index} className="comment-card p-2 my-2 rounded">
-                  {cmt}
+                  {editingIndex === index ? (
+                    <div>
+                      <textarea
+                        className="form-control"
+                        value={editText}
+                        onChange={(e) => setEditText(e.target.value)}
+                      />
+                      <button className="btn btn-success btn-sm mt-2" onClick={handleSaveEdit}>
+                        Save
+                      </button>
+                      <button
+                        className="btn btn-secondary btn-sm mt-2 ms-2"
+                        onClick={() => setEditingIndex(null)}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="d-flex justify-content-between align-items-center">
+                      <span>{cmt}</span>
+                      <button className="btn btn-link text-primary p-0" onClick={() => handleEditComment(index)}>
+                        Edit
+                      </button>
+                    </div>
+                  )}
                 </div>
               ))
             ) : (
@@ -89,9 +154,17 @@ const ProjectDetails = () => {
             )}
           </div>
 
-          <button className="btn btn-secondary mt-4 w-100" onClick={() => navigate(-1)}>
-            Back
-          </button>
+          {/* Back and Logout Buttons */}
+          <div className="d-flex justify-content-center gap-3 mt-4">
+            <button className="btn btn-secondary fw-bold px-4" onClick={() => navigate(-1)}>
+              Back
+            </button>
+
+            <Button className="btn-danger px-4" onClick={handleLogout}>
+              <i className="fs-5 bi bi-box-arrow-right"></i>
+              <span className="ms-2">Logout</span>
+            </Button>
+          </div>
         </div>
       </div>
 
