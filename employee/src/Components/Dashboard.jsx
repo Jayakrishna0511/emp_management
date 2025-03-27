@@ -4,6 +4,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { API_URL } from '../config';
+import { AdminProjects } from './Projects';
+
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -60,6 +62,14 @@ const Dashboard = () => {
                   <span className="ms-2 d-none d-sm-inline">Category</span>
                 </Link>
               </li>
+        
+              <li className="w-100">
+                <Link className="nav-link text-white px-3 d-flex align-items-center" to="/dashboard/projects">
+                <i className="fs-4 bi bi-folder"></i>
+                  <span className="ms-2 d-none d-sm-inline">Projects</span>
+                </Link>
+              </li>
+
               <li className="w-100 mt-auto">
                 <button className="nav-link text-white px-3 d-flex align-items-center btn btn-link p-0 w-100"
                         onClick={handleLogout}>

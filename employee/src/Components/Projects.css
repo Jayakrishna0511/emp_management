@@ -1,0 +1,31 @@
+.animated-bg {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+  }
+  
+  /* Improved Gradient Backgrounds */
+  .bg1 { background: linear-gradient(135deg, #4A90E2, #50B8E7); }
+  .bg2 { background: linear-gradient(135deg, #FF6B6B, #FF8E53); }
+  .bg3 { background: linear-gradient(135deg, #32A07C, #5CD889); }
+  .bg4 { background: linear-gradient(135deg, #9055A2, #D76EDC); }
+  
+  /* Fade-in animation */
+  .fade-in {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+  }
+  
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Responsive design fix */
+  @media (max-width: 768px) {
+    .card {
+      min-height: 25vh !important;
+      padding: 20px !important;
+    }
+  }
+  

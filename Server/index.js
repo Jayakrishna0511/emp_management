@@ -3,6 +3,7 @@ import cors from 'cors';
 import  Jwt  from 'jsonwebtoken';
 import { AdminRouter } from './Routes/AdminRoute.js'; 
 import { EmployeeRouter } from './Routes/EmployeeRoute.js';
+import { ProjectsRoutes } from './Routes/ProjectsRoutes.js';
 import cookieParser from 'cookie-parser';
 import dotenv from "dotenv";
 dotenv.config();
@@ -32,9 +33,10 @@ app.use(express.json());
 app.use(cookieParser())
 app.use('/auth', AdminRouter);
 app.use('/employee',EmployeeRouter)
+app.use('/api', ProjectsRoutes); 
 app.use(express.static('Public'))
 app.get("/",(req,res
-  
+
 )=>{
     res.send("root api is working")
 })
