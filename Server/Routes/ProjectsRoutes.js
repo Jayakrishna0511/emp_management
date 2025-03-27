@@ -98,7 +98,6 @@ router.put('/projects/:id/comment', async (req, res) => {
 });
 
 // to edit the comment
-// Edit a specific comment in a project
 router.put('/projects/:id/update-comment', async (req, res) => {
     const { id } = req.params;
     const { comment, index } = req.body;
