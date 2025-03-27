@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { API_URL } from '../config';
+import { API_URL } from '../config.jsx';
 import FadeContent from '../Components/Animations/Animation.jsx';
 // import './ProjectDetails.css';
 

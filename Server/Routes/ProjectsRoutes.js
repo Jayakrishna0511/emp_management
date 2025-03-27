@@ -1,11 +1,86 @@
+// import express from "express";
+// import db from "../utils/db.js";
+// const router = express.Router()
+
+// // add project
+// router.post('/projects', async (req, res) => {
+//     const { name, status, pending, comments, employee_id } = req.body;
+    
+//     if (!name || !employee_id) {
+//         return res.status(400).json({ error: "Project name and employee ID are required" });
+//     }
+
+//     try {
+//         await db.promise().query(
+//             "INSERT INTO projects (name, status, pending, comments, employee_id) VALUES (?, ?, ?, ?, ?)",
+//             [name, status || 'Pending', pending || false, comments || '', employee_id]
+//         );
+//         res.json({ success: true, message: "Project added successfully" });
+//     } catch (error) {
+//         res.status(500).json({ error: "Error adding project" });
+//     }
+// });
+
+// // Get all projects assigned to a specific employee
+// router.get('/employee/:id/projects', async (req, res) => {
+//     const { id } = req.params;
+//     try {
+//         const [projects] = await db.promise().query(
+//             "SELECT * FROM projects WHERE employee_id = ?", [id]
+//         );
+//         res.json(projects);
+//     } catch (error) {
+//         res.status(500).json({ error: "Error fetching projects" });
+//     }
+// });
+
+// // Update project status
+// router.post('/projects/:id/status', async (req, res) => {
+//     const { id } = req.params;
+//     const { status } = req.body;
+//     try {
+//         await db.promise().query(
+//             "UPDATE projects SET status = ?, pending = ? WHERE id = ?",
+//             [status, status === 'Pending', id]
+//         );
+//         res.json({ success: true, message: "Status updated" });
+//     } catch (error) {
+//         res.status(500).json({ error: "Error updating status" });
+//     }
+// });
+
+// // Add a comment to a project
+// router.post('/projects/:id/comment', async (req, res) => {
+//     const { id } = req.params;
+//     const { comment } = req.body;
+//     try {
+//         const [project] = await db.promise().query(
+//             "SELECT comments FROM projects WHERE id = ?", [id]
+//         );
+//         let updatedComments = project[0].comments ? project[0].comments + '\n' + comment : comment;
+
+//         await db.promise().query(
+//             "UPDATE projects SET comments = ? WHERE id = ?", [updatedComments, id]
+//         );
+//         res.json({ success: true, message: "Comment added" });
+//     } catch (error) {
+//         res.status(500).json({ error: "Error adding comment" });
+//     }
+// });
+
+// export { router as ProjectsRoutes };
+
+
+
 import express from "express";
 import db from "../utils/db.js";
-const router = express.Router()
 
+const router = express.Router();
 
+// Add a new project
 router.post('/projects', async (req, res) => {
     const { name, status, pending, comments, employee_id } = req.body;
-    
+
     if (!name || !employee_id) {
         return res.status(400).json({ error: "Project name and employee ID are required" });
     }
@@ -15,8 +90,9 @@ router.post('/projects', async (req, res) => {
             "INSERT INTO projects (name, status, pending, comments, employee_id) VALUES (?, ?, ?, ?, ?)",
             [name, status || 'Pending', pending || false, comments || '', employee_id]
         );
-        res.json({ success: true, message: "Project added successfully" });
+        res.status(201).json({ success: true, message: "Project added successfully" });
     } catch (error) {
+        console.error("Error adding project:", error);
         res.status(500).json({ error: "Error adding project" });
     }
 });
@@ -24,46 +100,74 @@ router.post('/projects', async (req, res) => {
 // Get all projects assigned to a specific employee
 router.get('/employee/:id/projects', async (req, res) => {
     const { id } = req.params;
+    
     try {
         const [projects] = await db.promise().query(
             "SELECT * FROM projects WHERE employee_id = ?", [id]
         );
+
+        if (projects.length === 0) {
+            return res.status(404).json({ message: "No projects found for this employee." });
+        }
+
         res.json(projects);
     } catch (error) {
+        console.error("Error fetching projects:", error);
         res.status(500).json({ error: "Error fetching projects" });
     }
 });
 
 // Update project status
-router.post('/projects/:id/status', async (req, res) => {
+router.put('/projects/:id/status', async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
+
     try {
-        await db.promise().query(
+        const [result] = await db.promise().query(
             "UPDATE projects SET status = ?, pending = ? WHERE id = ?",
             [status, status === 'Pending', id]
         );
-        res.json({ success: true, message: "Status updated" });
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: "Project not found" });
+        }
+
+        res.json({ success: true, message: "Status updated successfully" });
     } catch (error) {
-        res.status(500).json({ error: "Error updating status" });
+        console.error("Error updating project status:", error);
+        res.status(500).json({ error: "Error updating project status" });
     }
 });
 
 // Add a comment to a project
-router.post('/projects/:id/comment', async (req, res) => {
+router.put('/projects/:id/comment', async (req, res) => {
     const { id } = req.params;
     const { comment } = req.body;
+
+    if (!comment) {
+        return res.status(400).json({ error: "Comment cannot be empty" });
+    }
+
     try {
         const [project] = await db.promise().query(
             "SELECT comments FROM projects WHERE id = ?", [id]
         );
-        let updatedComments = project[0].comments ? project[0].comments + '\n' + comment : comment;
+
+        if (project.length === 0) {
+            return res.status(404).json({ error: "Project not found" });
+        }
+
+        let updatedComments = project[0].comments
+            ? `${project[0].comments}\n${comment}`
+            : comment;
 
         await db.promise().query(
             "UPDATE projects SET comments = ? WHERE id = ?", [updatedComments, id]
         );
-        res.json({ success: true, message: "Comment added" });
+
+        res.json({ success: true, message: "Comment added successfully" });
     } catch (error) {
+        console.error("Error adding comment:", error);
         res.status(500).json({ error: "Error adding comment" });
     }
 });

@@ -270,7 +270,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import "./EmployeeDetail.css";
+import "./EmployeeDetail.css";
 import { API_URL } from "../config";
 import FadeContent from "../Components/Animations/Animation.jsx";
 
