@@ -71,7 +71,7 @@ const Employee = () => {
           Add Employee
         </Link>
       </div>
-      <div className="d-flex justify-content-center d-md-none mb-3">
+      <div className="d-flex justify-content-center d-md-none mb-4">
         <Link to="/dashboard/add_employee" className="btn btn-success w-100">
           Add Employee
         </Link>
