@@ -154,7 +154,7 @@ const Employee = () => {
               <div className="mt-2">
                 <p className="mb-1"><strong>Address:</strong> {e.address}</p>
                 <p className="mb-1"><strong>Category:</strong> {getCategoryName(e.category_id)}</p>
-                <p className="mb-1"><strong>Salary:</strong>₹ {e.salary}</p>
+                <p className="mb-1"><strong>Salary:</strong>₹{e.salary}</p>
               </div>
               <div className="d-flex gap-2 mt-2">
                 <Link to={`/dashboard/edit-employee/${e.id}`} className="btn btn-info btn-sm w-50 text-truncate">
