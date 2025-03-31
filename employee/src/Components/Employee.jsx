@@ -71,11 +71,11 @@ const Employee = () => {
           Add Employee
         </Link>
       </div>
-      <div className="d-flex justify-content-center d-md-none mb-3">
+      {/* <div className="d-flex justify-content-center d-md-none mb-3">
         <Link to="/dashboard/add_employee" className="btn btn-success w-100">
           Add Employee
         </Link>
-      </div>
+      </div> */}
 
       {/* TABLE FOR LARGE SCREENS */}
       <div className="table-responsive d-none d-md-block">
@@ -154,7 +154,7 @@ const Employee = () => {
               <div className="mt-2">
                 <p className="mb-1"><strong>Address:</strong> {e.address}</p>
                 <p className="mb-1"><strong>Category:</strong> {getCategoryName(e.category_id)}</p>
-                <p className="mb-1"><strong>Salary:</strong> ${e.salary}</p>
+                <p className="mb-1"><strong>Salary:</strong>₹ {e.salary}</p>
               </div>
               <div className="d-flex gap-2 mt-2">
                 <Link to={`/dashboard/edit-employee/${e.id}`} className="btn btn-info btn-sm w-50 text-truncate">
