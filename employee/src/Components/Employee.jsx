@@ -71,11 +71,11 @@ const Employee = () => {
           Add Employee
         </Link>
       </div>
-      {/* <div className="d-flex justify-content-center d-md-none mb-3">
+      <div className="d-flex justify-content-center d-md-none mb-3">
         <Link to="/dashboard/add_employee" className="btn btn-success w-100">
           Add Employee
         </Link>
-      </div> */}
+      </div>
 
       {/* TABLE FOR LARGE SCREENS */}
       <div className="table-responsive d-none d-md-block">
