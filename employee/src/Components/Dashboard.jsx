@@ -4,7 +4,6 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../config";
-import { AdminProjects } from "./Projects";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -22,113 +21,101 @@ const Dashboard = () => {
       .catch((error) => console.error("Logout error:", error));
   };
 
+  const sidebarLinks = [
+    { to: "/dashboard", icon: "bi-speedometer2", label: "Dashboard" },
+    { to: "/dashboard/employee", icon: "bi-people", label: "Manage Employees" },
+    { to: "/dashboard/profile", icon: "bi-person", label: "Profile" },
+    { to: "/dashboard/category", icon: "bi-list", label: "Category" },
+    { to: "/dashboard/projects", icon: "bi-folder", label: "Projects" },
+    { to: "/dashboard/employeeworkdetails", icon: "bi-clipboard-data", label: "Employee Work Details" },
+    { to: "/dashboard/employeeOfTheMonth", icon: "bi-award", label: "Employee of the Month" },
+  ];
+
   return (
     <div className="container-fluid">
       <div className="row flex-nowrap">
         {/* Sidebar */}
         <div
-          className="col-auto col-md-3 col-lg-2 px-0 bg-dark position-fixed top-0 bottom-0 start-0 min-vh-100"
-          style={{ width: "18%" }}
+          className="col-auto bg-dark position-fixed top-0 bottom-0 start-0 min-vh-100 d-flex flex-column align-items-center align-items-md-start px-2 px-md-3"
+          style={{ width: "70px", width: "220px" }}
         >
-          <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
-            {/* Logo */}
-            <Link
-              className="d-flex align-items-center pb-3 mb-3 text-white text-decoration-none w-100"
-              to="/dashboard"
-            >
-              <span className="fs-4 fw-bolder d-none d-sm-inline">
-                FLYING FOX LABS
-              </span>
-            </Link>
+          {/* Logo */}
+          <Link
+            to="/dashboard"
+            className="d-flex align-items-center mb-4 mt-3 text-white text-decoration-none w-100"
+          >
+            <span className="fs-5 fw-bold d-none d-md-inline">FLYING FOX LABS</span>
+            <i className="bi bi-boxes fs-4 d-md-none"></i>
+          </Link>
 
-            {/* Sidebar Links */}
-            <ul className="nav nav-pills flex-column mb-auto w-100 align-items-center align-items-sm-start">
-              <li className="w-100">
+          {/* Nav Links */}
+          <ul className="nav nav-pills flex-column mb-auto w-100">
+            {sidebarLinks.map(({ to, icon, label }, idx) => (
+              <li className="w-100 mb-2" key={idx}>
                 <Link
-                  className="nav-link text-white px-3 d-flex align-items-center"
-                  to="/dashboard"
+                  to={to}
+                  className="nav-link text-white d-flex align-items-center px-2 px-md-3"
                 >
-                  <i className="fs-4 bi bi-speedometer2"></i>
-                  <span className="ms-2 d-none d-sm-inline">Dashboard</span>
-                </Link>
-              </li>
-              <li className="w-100">
-                <Link
-                  className="nav-link text-white px-3 d-flex align-items-center"
-                  to="/dashboard/employee"
-                >
-                  <i className="fs-4 bi bi-people"></i>
-                  <span className="ms-2 d-none d-sm-inline">
-                    Manage Employees
+                  <i className={`bi ${icon} fs-5`}></i>
+                  <span className="ms-2 d-none d-md-inline text-wrap" style={{ fontSize: "0.9rem" }}>
+                    {label}
                   </span>
                 </Link>
               </li>
-              <li className="w-100">
-                <Link
-                  className="nav-link text-white px-3 d-flex align-items-center"
-                  to="/dashboard/profile"
-                >
-                  <i className="fs-4 bi bi-person"></i>
-                  <span className="ms-2 d-none d-sm-inline">Profile</span>
-                </Link>
-              </li>
-              <li className="w-100">
-                <Link
-                  className="nav-link text-white px-3 d-flex align-items-center"
-                  to="/dashboard/category"
-                >
-                  <i className="fs-4 bi bi-list"></i>
-                  <span className="ms-2 d-none d-sm-inline">Category</span>
-                </Link>
-              </li>
+            ))}
 
-              <li className="w-100">
-                <Link
-                  className="nav-link text-white px-3 d-flex align-items-center"
-                  to="/dashboard/projects"
-                >
-                  <i className="fs-4 bi bi-folder"></i>
-                  <span className="ms-2 d-none d-sm-inline">Projects</span>
-                </Link>
-              </li>
-              <li className="w-100">
-                <Link
-                  className="nav-link text-white px-3 d-flex align-items-center"
-                  to="/dashboard/employeeworkdetails"
-                >
-                  <i className="fs-4 bi bi-clipboard-data"></i>
-                  <span className="ms-2 d-none d-sm-inline">
-                    Employee Work Details
-                  </span>
-                </Link>
-              </li>
-
-              <li className="w-100 mt-auto">
-                <button
-                  className="nav-link text-white px-3 d-flex align-items-center btn btn-link p-0 w-100"
-                  onClick={handleLogout}
-                >
-                  <i className="fs-4 bi bi-box-arrow-right"></i>
-                  <span className="ms-2 d-none d-sm-inline">Logout</span>
-                </button>
-              </li>
-            </ul>
-          </div>
+            {/* Logout */}
+            <li className="w-100 mt-auto">
+              <button
+                className="nav-link text-white d-flex align-items-center px-2 px-md-3 btn btn-link w-100"
+                onClick={handleLogout}
+              >
+                <i className="bi bi-box-arrow-right fs-5"></i>
+                <span className="ms-2 d-none d-md-inline">Logout</span>
+              </button>
+            </li>
+          </ul>
         </div>
 
-        {/* Main Content Area */}
+        {/* Main Content */}
         <div
           className="col p-0"
-          style={{ marginLeft: "18%", height: "100vh", overflowY: "auto" }}
+          style={{
+            marginLeft: "70px",
+            marginLeft: "220px",
+            height: "100vh",
+            overflowY: "auto",
+          }}
         >
-          <div className="p-3 shadow-sm d-flex justify-content-between align-items-center">
+          <div className="p-3 shadow-sm d-flex justify-content-between align-items-center bg-white sticky-top">
             <h5 className="mb-0">Employee Management System</h5>
           </div>
-          <div className="p-4">
+          <div className="p-3 p-md-4">
             <Outlet />
           </div>
         </div>
       </div>
+
+      {/* Media Query Fix for Sidebar Width */}
+      <style>{`
+        @media (max-width: 767.98px) {
+          .col-auto {
+            width: 70px !important;
+          }
+          .col {
+            margin-left: 70px !important;
+          }
+        }
+
+        @media (min-width: 768px) {
+          .col-auto {
+            width: 220px !important;
+          }
+          .col {
+            margin-left: 220px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 };

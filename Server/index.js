@@ -1,49 +1,49 @@
-import express from 'express';
-import cors from 'cors';
-import  Jwt  from 'jsonwebtoken';
-import { AdminRouter } from './Routes/AdminRoute.js'; 
-import { EmployeeRouter } from './Routes/EmployeeRoute.js';
-import { ProjectsRoutes } from './Routes/ProjectsRoutes.js';
-import cookieParser from 'cookie-parser';
+import express from "express";
+import cors from "cors";
+import Jwt from "jsonwebtoken";
+import employeeOfTheMonthRoute from "./Routes/EmpOfTheMonthRoute.js";
+import { AdminRouter } from "./Routes/AdminRoute.js";
+import { EmployeeRouter } from "./Routes/EmployeeRoute.js";
+import { ProjectsRoutes } from "./Routes/ProjectsRoutes.js";
+import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
 
-
-app.use(cors({
+app.use(
+  cors({
     origin: (origin, callback) => {
       const allowedOrigins = [
-        'http://localhost:5173',
-        'https://emp-management-weld.vercel.app'
+        "http://localhost:5173",
+        "https://emp-management-weld.vercel.app",
       ];
-      
+
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error('Not allowed by CORS'));
+        callback(new Error("Not allowed by CORS"));
       }
     },
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true
-  }));
-  
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
-app.use(cookieParser())
-app.use('/auth', AdminRouter);
-app.use('/employee',EmployeeRouter)
-app.use('/api', ProjectsRoutes); 
-app.use(express.static('Public'))
-app.get("/",(req,res
+app.use(cookieParser());
+app.use("/auth", AdminRouter);
+app.use("/employee", EmployeeRouter);
+app.use("/api", ProjectsRoutes);
+app.use(express.static("Public"));
+app.use("/api/emp", employeeOfTheMonthRoute);
 
-)=>{
-    res.send("root api is working")
-})
+app.get("/", (req, res) => {
+  res.send("root api is working");
+});
 
+let PORT = process.env.PORT || 4000;
 
-let PORT = process.env.PORT || 3000;
-
-app.listen(PORT,() => {
-    console.log("Server has been started");
+app.listen(PORT, () => {
+  console.log("Server has been started");
 });

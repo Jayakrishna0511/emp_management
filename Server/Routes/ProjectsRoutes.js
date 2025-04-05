@@ -2,6 +2,20 @@ import express from "express";
 import db from "../utils/db.js";
 const router = express.Router();
 
+
+
+//  [ADDED] Get all projects for admin
+router.get('/projects', async (req, res) => {
+    try {
+        const [projects] = await db.promise().query("SELECT * FROM projects");
+        res.json(projects);
+    } catch (error) {
+        console.error("Error fetching all projects:", error);
+        res.status(500).json({ error: "Error fetching all projects" });
+    }
+});
+
+
 // Add a new project
 router.post('/projects', async (req, res) => {
     const { name, status, pending, comments, employee_id } = req.body;
@@ -140,7 +154,6 @@ router.put('/projects/:id/update-comment', async (req, res) => {
     }
 });
 
-
 // Fetch all employees with their assigned projects
 router.get('/employees/work-details', async (req, res) => {
     try {
@@ -183,4 +196,5 @@ router.get('/employees/work-details', async (req, res) => {
         res.status(500).json({ error: "Error fetching employee work details" });
     }
 });
+
 export { router as ProjectsRoutes };

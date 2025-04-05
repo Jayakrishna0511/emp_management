@@ -20,7 +20,7 @@ const EmployeeWorkDetails = () => {
       employees.map((emp) => (
         <div key={emp.id} className="card p-3 mb-3 shadow-sm">
           <h4 className="text-primary">
-            <FaBriefcase className="me-2 text-secondary" /> {/* Work details icon */}
+            <FaBriefcase className="me-2 text-secondary" /> 
             {emp.name}
           </h4>
           <p>Email: {emp.email}</p>
