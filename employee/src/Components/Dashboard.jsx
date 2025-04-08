@@ -28,7 +28,7 @@ const Dashboard = () => {
     { to: "/dashboard/category", icon: "bi-list", label: "Category" },
     { to: "/dashboard/projects", icon: "bi-folder", label: "Projects" },
     { to: "/dashboard/employeeworkdetails", icon: "bi-clipboard-data", label: "Employee Work Details" },
-    { to: "/dashboard/employeeOfTheMonth", icon: "bi-award", label: "Employee of the Month" },
+    // { to: "/dashboard/employeeOfTheMonth", icon: "bi-award", label: "Employee of the Month" },
   ];
 
   return (
