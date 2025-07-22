@@ -8,7 +8,8 @@ const EmployeeOfTheMonth = () => {
   useEffect(() => {
     const fetchTopEmployee = async () => {
       try {
-        const res = await axios.get(`${API_URL}/api/emp/employee-of-the-month`);
+        // const res = await axios.get(`${API_URL}/api/emp/employee-of-the-month`);
+        const res = await axios.get(`http://localhost:4000/api/emp/employee-of-the-month`);
         setEmployee(res.data);
       } catch (err) {
         console.error("Failed to fetch top employee", err);

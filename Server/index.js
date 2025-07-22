@@ -7,8 +7,8 @@ import { EmployeeRouter } from "./Routes/EmployeeRoute.js";
 import { ProjectsRoutes } from "./Routes/ProjectsRoutes.js";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
+import connection from "./utils/db.js";
 dotenv.config();
-
 const app = express();
 
 app.use(

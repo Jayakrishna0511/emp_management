@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { API_URL } from "../config.jsx";
 import FadeContent from "../Components/Animations/Animation.jsx";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "./EmpProjects.css"; // Import the new CSS file
 
 const EmpProjects = () => {
   const { id } = useParams();
@@ -13,67 +13,65 @@ const EmpProjects = () => {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/api/employee/${id}/projects`)
+      // .get(`${API_URL}/api/employee/${id}/projects`)
+      .get(`http://localhost:4000/api/employee/${id}/projects`)
       .then((result) => setProjects(result.data))
       .catch(() => toast.error("Error fetching projects."));
   }, [id]);
 
+  const getStatusClass = (status) => {
+    switch(status?.toLowerCase()) {
+      case 'active': return 'status-active';
+      case 'completed': return 'status-completed';
+      case 'pending': return 'status-pending';
+      default: return 'status-inactive';
+    }
+  };
+
   return (
     <FadeContent blur={true} duration={1000} easing="ease-out" initialOpacity={0}>
-      <div className="container-fluid min-vh-100 d-flex flex-column align-items-center bg-light p-4">
-        <header className="w-100 text-center bg-primary text-white py-3 rounded mb-4">
-          <h2 className="fw-bold">Employee Projects</h2>
+      <div className="emp-projects-container">
+        <header className="projects-header">
+          <h2>Employee Projects</h2>
         </header>
 
-        <div className="row w-100 justify-content-center">
+        <div className="projects-grid">
           {projects.length > 0 ? (
-            projects.map((project) => (
-              <div key={project.id} className="col-12 col-md-6 col-lg-4 mb-4">
+            projects.map((project, index) => (
+              <div key={project.id} className="project-card" style={{animationDelay: `${index * 0.1}s`}}>
                 <div
-                  className="card shadow-sm p-3 text-center border-0 project-card"
+                  className="project-card-body"
                   onClick={() => navigate(`/projects/${project.id}`)}
                 >
-                  <div className="card-body">
-                    <h4 className="fw-bold text-primary">{project.name}</h4>
-                    <p className="mb-1">
-                      <strong>Status:</strong> {project.status}
-                    </p>
-                    <p>
-                      <strong>Pending:</strong> {project.pending ? "Yes" : "No"}
-                    </p>
-                  </div>
+                  <h4 className="project-title">{project.name}</h4>
+                  <p className="project-info">
+                    <strong>Status:</strong> 
+                    <span className={`project-status ${getStatusClass(project.status)}`}>
+                      {project.status}
+                    </span>
+                  </p>
+                  <p className="project-info pending-indicator">
+                    <strong>Pending:</strong> 
+                    <span className={project.pending ? 'pending-yes' : 'pending-no'}>
+                      {project.pending ? "Yes" : "No"}
+                    </span>
+                  </p>
                 </div>
               </div>
             ))
           ) : (
-            <p className="text-muted fs-5">No projects found.</p>
+            <div className="no-projects">
+              <p>No projects found.</p>
+            </div>
           )}
         </div>
-        
-        <button className="btn btn-secondary mt-3" onClick={() => navigate(-1)}>
+                
+        <button className="back-button" onClick={() => navigate(-1)}>
           Back
         </button>
       </div>
-
-      {/* Custom Styling */}
-      <style>
-        {`
-          .project-card {
-            background-color: #f8f9fa;
-            transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
-          }
-          .project-card:hover {
-            background-color: #e3f2fd;
-            transform: scale(1.05);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-          }
-        `}
-      </style>
     </FadeContent>
   );
 };
 
 export default EmpProjects;
-
-
-

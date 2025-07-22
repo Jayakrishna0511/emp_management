@@ -21,7 +21,8 @@ const Login = () => {
         if (event) event.preventDefault();
     
 
-        axios.post(`${API_URL}/auth/adminlogin`, values)
+        // axios.post(`${API_URL}/auth/adminlogin`, values)
+        axios.post(`http://localhost:4000/auth/adminlogin`, values)
             .then(result => {
                 console.log(result, "result");
                 if (result.data.loginStatus) {
@@ -47,7 +48,7 @@ const Login = () => {
         localStorage.setItem("valid", true);
         setError(null);
     
-        setValues({ email: "test@gmail.com", password: "123456" });
+        setValues({ email: "admin@gmail.com", password: "123456" });
         setIsGuest(true); // Trigger `useEffect` to call handleSubmit
     };
  

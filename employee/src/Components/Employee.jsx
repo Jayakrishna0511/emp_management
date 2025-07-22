@@ -11,7 +11,8 @@ const Employee = () => {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/auth/category`)
+      // .get(`${API_URL}/auth/category`)
+      .get(`http://localhost:4000/auth/category`)
       .then((result) => {
         if (result.data.Status) {
           setCategories(result.data.Result);
@@ -31,7 +32,8 @@ const Employee = () => {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/auth/employee`)
+      // .get(`${API_URL}/auth/employee`)
+      .get(`http://localhost:4000/auth/employee`)
       .then((result) => {
         if (result.data.Status) {
           setEmployee(result.data.Result);
@@ -46,7 +48,8 @@ const Employee = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`${API_URL}/auth/delete_employee/${id}`)
+      // .delete(`${API_URL}/auth/delete_employee/${id}`)
+      .delete(`http://localhost:4000/auth/delete_employee/${id}`)
       .then((res) => {
         if (res.data.Status) {
           window.location.reload();

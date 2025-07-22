@@ -70,7 +70,7 @@ function App() {
               <Route path="category" element={<Category />} />
               <Route path="profile" element={<Profile />} />
               <Route path="add-category" element={<AddCategory />} />
-              <Route path="add_employee" element={<AddEmployee />} />
+              <Route path="add_employee" element={<AddEmployee />} />z
               <Route path="edit-employee/:id" element={<EditEmployee />} />
 
               {/*  Added Projects route */}

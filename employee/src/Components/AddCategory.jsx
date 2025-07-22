@@ -10,7 +10,8 @@ const AddCategory = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post(`${API_URL}/auth/add-category`, { category })
+      // .post(`${API_URL}/auth/add-category`, { category })
+      .post(`http://localhost:4000/auth/add-category`, { category })
       .then((result) => {
         if (result.data.Status) {
           navigate("/dashboard/category");

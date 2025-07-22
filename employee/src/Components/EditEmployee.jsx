@@ -17,7 +17,8 @@ const EditEmployee = () => {
 
   // Fetch categories and employee data
   useEffect(() => {
-    axios.get(`${API_URL}/auth/category`)
+    // axios.get(`${API_URL}/auth/category`)
+    axios.get(`http://localhost:4000/auth/category`)
       .then(result => {
         if (result.data.Status) {
           setCategory(result.data.Result);  
@@ -30,7 +31,8 @@ const EditEmployee = () => {
         console.log(err);
       });
 
-    axios.get(`${API_URL}/auth/employee/ ${id}`)
+    // axios.get(`${API_URL}/auth/employee/ ${id}`)
+    axios.get(`http://localhost:4000/auth/employee/ ${id}`)
       .then(result => {
         if (result.data.Status) {
           const employeeData = result.data.Result && result.data.Result[0];
@@ -59,7 +61,8 @@ const EditEmployee = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.put(`${API_URL}/auth/edit-employee/` + id, employee)
+    // axios.put(`${API_URL}/auth/edit-employee/` + id, employee)
+    axios.put(`http://localhost:4000/auth/edit-employee/` + id, employee)
       .then(result => {  
         // console.log(result);  
         if (result.data.Status) {

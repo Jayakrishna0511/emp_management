@@ -4,8 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { API_URL } from "../config.jsx";
 import FadeContent from "../Components/Animations/Animation.jsx";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Button } from "react-bootstrap";
+import "./ProjectDetails.css"; 
 
 const ProjectDetails = () => {
   const { id } = useParams();
@@ -17,14 +16,16 @@ const ProjectDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/api/projects/${id}`)
+      // .get(`${API_URL}/api/projects/${id}`)
+      .get(`http://localhost:4000/api/projects/${id}`)
       .then((result) => setProject({ ...result.data, comments: result.data.comments || [] }))
     //   .catch(() => toast.error("Error fetching project details."));
   }, [id]);
 
   const handleStatusChange = (status) => {
     axios
-      .put(`${API_URL}/api/projects/${id}/status`, { status })
+      // .put(`${API_URL}/api/projects/${id}/status`, { status })
+      .put(`http://localhost:4000/api/projects/${id}/status`, { status })
       .then(() => {
         toast.success("Status updated!");
         setProject((prev) => ({ ...prev, status }));
@@ -36,7 +37,8 @@ const ProjectDetails = () => {
     if (!comment.trim()) return toast.error("Comment cannot be empty.");
 
     axios
-      .put(`${API_URL}/api/projects/${id}/comment`, { comment })
+      // .put(`${API_URL}/api/projects/${id}/comment`, { comment })
+      .put(`http://localhost:4000/api/projects/${id}/comment`, { comment })
       .then(() => {
         toast.success("Comment added!");
         setProject((prev) => ({
@@ -60,7 +62,8 @@ const ProjectDetails = () => {
     updatedComments[editingIndex] = editText;
 
     axios
-      .put(`${API_URL}/api/projects/${id}/update-comment`, { comment: editText, index: editingIndex })
+      // .put(`${API_URL}/api/projects/${id}/update-comment`, { comment: editText, index: editingIndex })
+      .put(`http://localhost:4000/api/projects/${id}/update-comment`, { comment: editText, index: editingIndex })
       .then(() => {
         toast.success("Comment updated!");
         setProject((prev) => ({ ...prev, comments: updatedComments }));
@@ -71,7 +74,8 @@ const ProjectDetails = () => {
 
   const handleLogout = () => {
     axios
-      .get(`${API_URL}/auth/logout`)
+      // .get(`${API_URL}/auth/logout`)
+      .get(`http://localhost:4000/auth/logout`)
       .then((result) => {
         if (result.data.Status) {
           localStorage.removeItem("valid");
@@ -81,68 +85,81 @@ const ProjectDetails = () => {
       .catch((error) => console.error("Logout error:", error));
   };
 
+  const getStatusClass = (status) => {
+    switch(status?.toLowerCase()) {
+      case 'completed': return 'status-completed';
+      case 'pending': return 'status-pending';
+      default: return 'status-active';
+    }
+  };
+
   return (
     <FadeContent blur={true} duration={1000} easing="ease-out" initialOpacity={0}>
-      <div className="container-fluid min-vh-100 d-flex flex-column align-items-center bg-light p-4">
-        <div className="card shadow-lg p-4 w-75 bg-white rounded">
-          <h2 className="text-center text-primary fw-bold">Project: {project.name}</h2>
-          <p className="text-center fs-5">
-            <strong>Status:</strong>{" "}
-            <span className={`badge ${project.status === "Completed" ? "bg-success" : "bg-warning"}`}>
+      <div className="project-details-container">
+        <div className="project-details-card">
+          <h2 className="project-title">Project: {project.name}</h2>
+          
+          <div className="project-status-section">
+            <div className="project-status-label">Status:</div>
+            <span className={`status-badge ${getStatusClass(project.status)}`}>
               {project.status}
             </span>
-          </p>
+          </div>
 
           {/* Status Change Buttons */}
-          <div className="d-flex justify-content-center gap-3 my-3">
-            <button className="btn btn-warning fw-bold" onClick={() => handleStatusChange("Pending")}>
+          <div className="status-buttons">
+            <button className="status-btn btn-pending" onClick={() => handleStatusChange("Pending")}>
               Mark Pending
             </button>
-            <button className="btn btn-success fw-bold" onClick={() => handleStatusChange("Completed")}>
+            <button className="status-btn btn-completed" onClick={() => handleStatusChange("Completed")}>
               Mark Completed
             </button>
           </div>
 
           {/* Comments Section */}
-          <h3 className="mt-4 text-secondary">Comments</h3>
-          <div className="mb-3">
+          <h3 className="comments-section-header">Comments</h3>
+          
+          <div className="comment-input-section">
             <textarea
-              className="form-control"
+              className="comment-textarea"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               placeholder="Add a comment..."
-              rows="3"
+              rows="4"
             />
+            <button className="add-comment-btn" onClick={handleAddComment}>
+              Add Comment
+            </button>
           </div>
-          <button className="btn btn-primary w-50 d-block mx-auto fw-bold" onClick={handleAddComment}>
-            Add Comment
-          </button>
 
-          <div className="comments-section mt-4">
+          <div className="comments-list">
             {project.comments?.length > 0 ? (
               project.comments.map((cmt, index) => (
-                <div key={index} className="comment-card p-2 my-2 rounded">
+                <div key={index} className="comment-item" style={{animationDelay: `${index * 0.1}s`}}>
                   {editingIndex === index ? (
-                    <div>
+                    <div className="edit-comment-section">
                       <textarea
-                        className="form-control"
+                        className="edit-textarea"
                         value={editText}
                         onChange={(e) => setEditText(e.target.value)}
+                        rows="3"
                       />
-                      <button className="btn btn-success btn-sm mt-2" onClick={handleSaveEdit}>
-                        Save
-                      </button>
-                      <button
-                        className="btn btn-secondary btn-sm mt-2 ms-2"
-                        onClick={() => setEditingIndex(null)}
-                      >
-                        Cancel
-                      </button>
+                      <div className="edit-actions">
+                        <button className="save-edit-btn" onClick={handleSaveEdit}>
+                          Save
+                        </button>
+                        <button
+                          className="cancel-edit-btn"
+                          onClick={() => setEditingIndex(null)}
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     </div>
                   ) : (
-                    <div className="d-flex justify-content-between align-items-center">
-                      <span>{cmt}</span>
-                      <button className="btn btn-link text-primary p-0" onClick={() => handleEditComment(index)}>
+                    <div className="comment-content">
+                      <span className="comment-text">{cmt}</span>
+                      <button className="edit-comment-btn" onClick={() => handleEditComment(index)}>
                         Edit
                       </button>
                     </div>
@@ -150,39 +167,24 @@ const ProjectDetails = () => {
                 </div>
               ))
             ) : (
-              <p className="text-muted">No comments yet.</p>
+              <div className="no-comments">No comments yet.</div>
             )}
           </div>
 
           {/* Back and Logout Buttons */}
-          <div className="d-flex justify-content-center gap-3 mt-4">
-            <button className="btn btn-secondary fw-bold px-4" onClick={() => navigate(-1)}>
-              Back
+          <div className="action-buttons">
+            <button className="back-btn" onClick={() => navigate(-1)}>
+              <span>←</span>
+              <span>Back</span>
             </button>
 
-            <Button className="btn-danger px-4" onClick={handleLogout}>
-              <i className="fs-5 bi bi-box-arrow-right"></i>
-              <span className="ms-2">Logout</span>
-            </Button>
+            <button className="logout-btn" onClick={handleLogout}>
+              <span>⏻</span>
+              <span>Logout</span>
+            </button>
           </div>
         </div>
       </div>
-
-      {/* Custom Styling */}
-      <style>
-        {`
-          .comment-card {
-            background-color: #f8f9fa;
-            border-left: 5px solid #0d6efd;
-            padding: 10px;
-            transition: transform 0.2s ease-in-out;
-          }
-          .comment-card:hover {
-            transform: scale(1.02);
-            background-color: #e9ecef;
-          }
-        `}
-      </style>
     </FadeContent>
   );
 };

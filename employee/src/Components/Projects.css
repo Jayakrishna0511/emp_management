@@ -1,43 +1,74 @@
-/* Card animation */
-.animate-pop {
-  animation: popIn 0.4s ease forwards;
+/* Base card styling */
+.project-card {
+  background-color: #f9f9f9;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+  border-radius: 12px;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  margin-bottom: 16px;
 }
-@keyframes popIn {
-  0% {
-    transform: scale(0.9);
-    opacity: 0;
+
+/* Hover animation */
+.project-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Expanded card content */
+.project-card.expanded {
+  background-color: #e3f2fd;
+  transform: scale(1.01);
+}
+
+/* Responsive typography */
+.project-card h3,
+.project-card h4 {
+  margin: 0 0 8px;
+  font-size: 1.25rem;
+}
+
+.project-card p {
+  font-size: 1rem;
+  color: #444;
+}
+
+/* Make card content wrap cleanly */
+.project-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .project-card {
+    padding: 16px;
+    font-size: 0.95rem;
   }
-  100% {
-    transform: scale(1.05);
-    opacity: 1;
+
+  .project-card h3,
+  .project-card h4 {
+    font-size: 1.1rem;
+  }
+
+  .project-card p {
+    font-size: 0.9rem;
   }
 }
 
-.animate-default {
-  animation: fadeIn 0.3s ease-in-out forwards;
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
+@media (max-width: 480px) {
+  .project-card {
+    padding: 12px;
   }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
 
-/* Quote fade-in */
-.fade-in-quote {
-  animation: fadeInQuote 0.5s ease-in-out;
-}
-@keyframes fadeInQuote {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+  .project-card h3,
+  .project-card h4 {
+    font-size: 1rem;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .project-card p {
+    font-size: 0.85rem;
   }
 }
