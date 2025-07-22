@@ -11,7 +11,8 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     axios
-      .get(`${API_URL}/auth/logout`)
+      // .get(`${API_URL}/auth/logout`)
+      .get(`http://localhost:4000/auth/logout`)
       .then((result) => {
         if (result.data.Status) {
           localStorage.removeItem("valid");

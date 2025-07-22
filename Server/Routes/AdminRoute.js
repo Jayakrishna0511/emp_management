@@ -228,25 +228,7 @@ router.delete('/delete-admin/:id', (req, res) => {
 
 //*************************************************** */ for profile page
 
-// const verifyUser = (req, res, next) => {
-//   // const token = req.cookies.token; // Get the token from the cookies
-//  // Extract token 
-//  let token = req.cookies.token || req.headers.authorization?.split(" ")[1]; 
 
-//   if (token) {
-//     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-//       if (err) {
-//         return res.status(401).json({ Status: false, Error: "Invalid token" });
-//       }
-      
-//       req.id = decoded.id; // Set the decoded ID from the token
-//       req.role = decoded.role; // Set the decoded role from the token
-//       next(); // Proceed to the next middleware (route handler)
-//     });
-//   } else {
-//     return res.status(401).json({ Status: false, Error: "Not Authenticated" });
-//   }
-// };
 
 
 const verifyUser = (req, res, next) => {
@@ -295,24 +277,6 @@ router.get('/verify',verifyUser, (req, res) => {
 
 
 
-// router.get('/verify', verifyUser, (req, res) => {
-//   const mysqlQuery = "SELECT * FROM admin WHERE id = ?";
-
-//   connection.query(mysqlQuery, [req.id], (err, result) => {
-//     if (err || result.length === 0) {
-//       return res.status(500).json({ Status: false, Error: "Database query failed" });
-//     }
-
-//     const admin = result[0];
-//     res.json({
-//       Status: true,
-//       name: admin.name,
-//       email: admin.email,
-//       role: admin.role,
-//       lastLogin: admin.lastLogin,
-//     });
-//   });
-// });
 
 
 

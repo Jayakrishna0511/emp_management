@@ -37,6 +37,8 @@ app.use("/employee", EmployeeRouter);
 app.use("/api", ProjectsRoutes);
 app.use(express.static("Public"));
 app.use("/api/emp", employeeOfTheMonthRoute);
+// app.use('/', router);
+
 
 app.get("/", (req, res) => {
   res.send("root api is working");
