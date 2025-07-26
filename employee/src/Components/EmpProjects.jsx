@@ -13,8 +13,8 @@ const EmpProjects = () => {
 
   useEffect(() => {
     axios
-      // .get(`${API_URL}/api/employee/${id}/projects`)
-      .get(`http://localhost:4000/api/employee/${id}/projects`)
+      .get(`${API_URL}/api/employee/${id}/projects`)
+      // .get(`http://localhost:4000/api/employee/${id}/projects`)
       .then((result) => setProjects(result.data))
       .catch(() => toast.error("Error fetching projects."));
   }, [id]);
