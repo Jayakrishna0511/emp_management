@@ -43,7 +43,7 @@ const EmployeeLogin = () => {
     setError(null);
     setValues({ email: 'jay@gmail.com', password: '123456' });
     setIsGuest(true); // Trigger the useEffect for submission
-    navigate('/employee_detail/');
+    // navigate('/employee_detail/');
   };
 
   return (
