@@ -49,6 +49,7 @@ const Login = () => {
         setError(null);
     
         setValues({ email: "admin@gmail.com", password: "123456" });
+        navigate('/dashboard');
         setIsGuest(true); // Trigger `useEffect` to call handleSubmit
     };
  
