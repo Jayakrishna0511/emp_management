@@ -17,8 +17,8 @@ const EmployeeDetail = () => {
   // Fetch Employee Details
   useEffect(() => {
     axios
-      // .get(`${API_URL}/employee/detail/${id}`)
-      .get(`http://localhost:4000/employee/detail/${id}`)
+      .get(`${API_URL}/employee/detail/${id}`)
+      // .get(`http://localhost:4000/employee/detail/${id}`)
       .then((res) => {
         setEmployee(res.data[0]);
         setLoading(false);
@@ -34,8 +34,8 @@ const EmployeeDetail = () => {
     if (!employee?.category_id) return;
 
     axios
-      // .get(`${API_URL}/auth/category`)
-      .get(`http://localhost:4000/auth/category`)
+      .get(`${API_URL}/auth/category`)
+      // .get(`http://localhost:4000/auth/category`)
       .then((res) => {
         if (res.data.Status) {
           setCategories(res.data.Result);
@@ -55,8 +55,8 @@ const EmployeeDetail = () => {
   // Handle Logout
   const handleLogout = () => {
     axios
-      // .get(`${API_URL}/employee/logout`)
-      .get(`http://localhost:4000/employee/logout`)
+      .get(`${API_URL}/employee/logout`)
+      // .get(`http://localhost:4000/employee/logout`)
       .then((res) => {
         if (res.data.Status) {
           localStorage.removeItem("valid");
@@ -99,8 +99,8 @@ const EmployeeDetail = () => {
               <img
                 src={
                   employee?.image
-                    // ? `${API_URL}/Images/${employee.image}`
-                    ? `http://localhost:4000/Images/${employee.image}`
+                    ? `${API_URL}/Images/${employee.image}`
+                    // ? `http://localhost:4000/Images/${employee.image}`
                     : "/placeholder.png"
                 }
                 alt={employee?.name || "Employee"}

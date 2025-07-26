@@ -8,8 +8,8 @@ const Start = () => {
 
   useEffect(() => {
     axios
-      // .get(`${API_URL}/verify`)
-      .get(`http://localhost:4000/verify`)
+      .get(`${API_URL}/verify`)
+      // .get(`http://localhost:4000/verify`)
       .then((result) => {
         if (result.data.Status) {
           if (result.data.role === "admin") {

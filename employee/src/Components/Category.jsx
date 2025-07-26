@@ -7,8 +7,8 @@ const Category = () => {
     const [category, setCategory] = useState([])
 
     useEffect(() => {
-        // axios.get(`${API_URL}/auth/category`)
-        axios.get(`http://localhost:4000/auth/category`)
+        axios.get(`${API_URL}/auth/category`)
+        // axios.get(`http://localhost:4000/auth/category`)
             .then(result => {
                 if (result.data.Status) {
                     setCategory(result.data.Result);

@@ -24,8 +24,8 @@ const Home = () => {
   }, []);
 
   const AdminRecords = () => {
-    // axios.get(`${API_URL}/auth/admin_records`).then((result) => {
-    axios.get(`http://localhost:4000/auth/admin_records`).then((result) => {
+    axios.get(`${API_URL}/auth/admin_records`).then((result) => {
+    // axios.get(`http://localhost:4000/auth/admin_records`).then((result) => {
       if (result.data.Status) {
         setAdmins(result.data.Result);
       } else {
@@ -35,8 +35,8 @@ const Home = () => {
   };
 
   const adminCount = () => {
-    // axios.get(`${API_URL}/auth/admin_count`).then((result) => {
-    axios.get(`http://localhost:4000/auth/admin_count`).then((result) => {
+    axios.get(`${API_URL}/auth/admin_count`).then((result) => {
+    // axios.get(`http://localhost:4000/auth/admin_count`).then((result) => {
       if (result.data.Status) {
         setAdminTotal(result.data.Result[0].admin);
       }
@@ -44,8 +44,8 @@ const Home = () => {
   };
 
   const employeeCount = () => {
-    // axios.get(`${API_URL}/auth/employee_count`).then((result) => {
-    axios.get(`http://localhost:4000/auth/employee_count`).then((result) => {
+    axios.get(`${API_URL}/auth/employee_count`).then((result) => {
+    // axios.get(`http://localhost:4000/auth/employee_count`).then((result) => {
       if (result.data.Status) {
         setEmployeeTotal(result.data.Result[0].employee);
       }
@@ -53,8 +53,8 @@ const Home = () => {
   };
 
   const salaryCount = () => {
-    // axios.get(`${API_URL}/auth/salary_count`).then((result) => {
-    axios.get(`http://localhost:4000/auth/salary_count`).then((result) => {
+    axios.get(`${API_URL}/auth/salary_count`).then((result) => {
+    // axios.get(`http://localhost:4000/auth/salary_count`).then((result) => {
       if (result.data.Status) {
         setSalaryTotal(result.data.Result[0].salaryOfEmp);
       } else {
@@ -82,8 +82,8 @@ const Home = () => {
     };
 
     axios
-      // .put(`${API_URL}/auth/edit-admin/${selectedAdmin.id}`, data)
-      .put(`http://localhost:4000/auth/edit-admin/${selectedAdmin.id}`, data)
+      .put(`${API_URL}/auth/edit-admin/${selectedAdmin.id}`, data)
+      // .put(`http://localhost:4000/auth/edit-admin/${selectedAdmin.id}`, data)
       .then((result) => {
         if (result.data.Status) {
           toast.success("Admin updated successfully!");
@@ -106,8 +106,8 @@ const Home = () => {
     );
     if (confirmation) {
       axios
-        // .delete(`${API_URL}/auth/delete-admin/${id}`)
-        .delete(`http://localhost:4000/auth/delete-admin/${id}`)
+        .delete(`${API_URL}/auth/delete-admin/${id}`)
+        // .delete(`http://localhost:4000/auth/delete-admin/${id}`)
         .then((result) => {
           if (result.data.Status) {
             toast.success("Admin deleted successfully!");

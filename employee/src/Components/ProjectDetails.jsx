@@ -16,16 +16,16 @@ const ProjectDetails = () => {
 
   useEffect(() => {
     axios
-      // .get(`${API_URL}/api/projects/${id}`)
-      .get(`http://localhost:4000/api/projects/${id}`)
+      .get(`${API_URL}/api/projects/${id}`)
+      // .get(`http://localhost:4000/api/projects/${id}`)
       .then((result) => setProject({ ...result.data, comments: result.data.comments || [] }))
     //   .catch(() => toast.error("Error fetching project details."));
   }, [id]);
 
   const handleStatusChange = (status) => {
     axios
-      // .put(`${API_URL}/api/projects/${id}/status`, { status })
-      .put(`http://localhost:4000/api/projects/${id}/status`, { status })
+      .put(`${API_URL}/api/projects/${id}/status`, { status })
+      // .put(`http://localhost:4000/api/projects/${id}/status`, { status })
       .then(() => {
         toast.success("Status updated!");
         setProject((prev) => ({ ...prev, status }));
@@ -37,8 +37,8 @@ const ProjectDetails = () => {
     if (!comment.trim()) return toast.error("Comment cannot be empty.");
 
     axios
-      // .put(`${API_URL}/api/projects/${id}/comment`, { comment })
-      .put(`http://localhost:4000/api/projects/${id}/comment`, { comment })
+      .put(`${API_URL}/api/projects/${id}/comment`, { comment })
+      // .put(`http://localhost:4000/api/projects/${id}/comment`, { comment })
       .then(() => {
         toast.success("Comment added!");
         setProject((prev) => ({
@@ -62,8 +62,8 @@ const ProjectDetails = () => {
     updatedComments[editingIndex] = editText;
 
     axios
-      // .put(`${API_URL}/api/projects/${id}/update-comment`, { comment: editText, index: editingIndex })
-      .put(`http://localhost:4000/api/projects/${id}/update-comment`, { comment: editText, index: editingIndex })
+      .put(`${API_URL}/api/projects/${id}/update-comment`, { comment: editText, index: editingIndex })
+      // .put(`http://localhost:4000/api/projects/${id}/update-comment`, { comment: editText, index: editingIndex })
       .then(() => {
         toast.success("Comment updated!");
         setProject((prev) => ({ ...prev, comments: updatedComments }));
@@ -74,8 +74,8 @@ const ProjectDetails = () => {
 
   const handleLogout = () => {
     axios
-      // .get(`${API_URL}/auth/logout`)
-      .get(`http://localhost:4000/auth/logout`)
+      .get(`${API_URL}/auth/logout`)
+      // .get(`http://localhost:4000/auth/logout`)
       .then((result) => {
         if (result.data.Status) {
           localStorage.removeItem("valid");

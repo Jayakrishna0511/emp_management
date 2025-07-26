@@ -24,8 +24,8 @@ const Profile = () => {
   useEffect(() => {
     const fetchAdminData = async () => {
       try {
-        // const result = await axios.get(`${API_URL}/auth/verify`, {
-        const result = await axios.get(`http://localhost:4000/auth/verify`, {
+        const result = await axios.get(`${API_URL}/auth/verify`, {
+        // const result = await axios.get(`http://localhost:4000/auth/verify`, {
           headers: {
             Authorization: `Bearer ${cookies.token}`
           }

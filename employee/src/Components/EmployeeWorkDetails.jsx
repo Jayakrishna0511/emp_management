@@ -8,8 +8,8 @@ const EmployeeWorkDetails = () => {
   const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
-    // axios.get(`${API_URL}/api/employees/work-details`)
-    axios.get(`http://localhost:4000/api/employees/work-details`)
+    axios.get(`${API_URL}/api/employees/work-details`)
+    // axios.get(`http://localhost:4000/api/employees/work-details`)
       .then((res) => setEmployees(res.data))
       .catch(() => toast.error("Error fetching employee work details."));
   }, []);

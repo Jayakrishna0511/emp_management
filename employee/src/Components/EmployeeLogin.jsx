@@ -18,8 +18,8 @@ const EmployeeLogin = () => {
     if (event) event.preventDefault();
     
     axios
-      // .post(`${API_URL}/employee/employee_login`, values)
-      .post(`http://localhost:4000/employee/employee_login`, values)
+      .post(`${API_URL}/employee/employee_login`, values)
+      // .post(`http://localhost:4000/employee/employee_login`, values)
       .then((result) => {
         if (result.data.loginStatus) {
           localStorage.setItem('valid', true);

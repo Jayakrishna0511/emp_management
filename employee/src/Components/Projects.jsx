@@ -23,8 +23,8 @@ export const AdminProjects = () => {
 
   const fetchProjects = async () => {
     try {
-      // const response = await axios.get(`${API_URL}/api/projects`);
-      const response = await axios.get(`http://localhost:4000/api/projects`);
+      const response = await axios.get(`${API_URL}/api/projects`);
+      // const response = await axios.get(`http://localhost:4000/api/projects`);
       setProjects(response.data);
     } catch (error) {
       console.error("Error fetching projects:", error);
@@ -38,8 +38,8 @@ export const AdminProjects = () => {
   const handleAddProject = async (e) => {
     e.preventDefault();
     try {
-      // const response = await axios.post(`${API_URL}/api/projects`, newProject);
-      const response = await axios.post(`http://localhost:4000/api/projects`, newProject);
+      const response = await axios.post(`${API_URL}/api/projects`, newProject);
+      // const response = await axios.post(`http://localhost:4000/api/projects`, newProject);
       if (response.data.success) {
         fetchProjects();
         setNewProject({ name: "", employee_id: "", status: "Pending", pending: true });

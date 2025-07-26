@@ -19,8 +19,8 @@ const AddEmployee = () => {
 
   useEffect(() => {
     axios
-      // .get(`${API_URL}/auth/category`)
-      .get(`http://localhost:4000/auth/category`)
+      .get(`${API_URL}/auth/category`)
+      // .get(`http://localhost:4000/auth/category`)
       .then((result) => {
         if (result.data.Status) {
           setCategory(result.data.Result);
@@ -48,8 +48,8 @@ const AddEmployee = () => {
     formData.append("category_id", employee.category_id);
 
     axios
-      // .post(`${API_URL}/auth/add-employee`, formData)
-      .post(`http://localhost:4000/auth/add-employee`, formData)
+      .post(`${API_URL}/auth/add-employee`, formData)
+      // .post(`http://localhost:4000/auth/add-employee`, formData)
       .then((result) => {
         if (result.data.Status) {
           navigate("/dashboard/employee");
