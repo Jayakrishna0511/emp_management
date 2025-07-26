@@ -42,8 +42,8 @@ const EmployeeLogin = () => {
     localStorage.setItem('valid', true);
     setError(null);
     setValues({ email: 'jay@gmail.com', password: '123456' });
-    navigate('/employee_detail/');
     setIsGuest(true); // Trigger the useEffect for submission
+    navigate('/employee_detail/');
   };
 
   return (
