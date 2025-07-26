@@ -194,14 +194,17 @@ body {
   background: linear-gradient(135deg, #6b7280, #4b5563);
   color: white;
   border: none;
-  padding: 1rem 2rem;
-  border-radius: 15px;
+  padding: 0.75rem 2rem;       
+  border-radius: 12px;        
   font-weight: 600;
-  font-size: 16px;
+  font-size: 16px;             
   cursor: pointer;
+  display: flex;               
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;                
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(107, 114, 128, 0.3);
-  backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
