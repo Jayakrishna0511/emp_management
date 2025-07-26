@@ -11,25 +11,49 @@ import connection from "./utils/db.js";
 dotenv.config();
 const app = express();
 
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       const allowedOrigins = [
+//         "http://localhost:5173",
+//         "https://emp-management-weld.vercel.app",
+//       ];
+
+//       if (!origin || allowedOrigins.includes(origin)) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error("Not allowed by CORS"));
+//       }
+//     },
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     credentials: true,
+//   })
+// );
+
+
+// CORS config
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://emp-management-weld.vercel.app",
+];
+
 app.use(
   cors({
-    origin: (origin, callback) => {
-      const allowedOrigins = [
-        "http://localhost:5173",
-        "https://emp-management-weld.vercel.app",
-      ];
-
+    origin: function (origin, callback) {
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
+        console.error("CORS error:", origin);
         callback(new Error("Not allowed by CORS"));
       }
     },
-    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 
+// Handle preflight
+app.options("*", cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use("/auth", AdminRouter);
