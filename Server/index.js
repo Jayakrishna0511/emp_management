@@ -35,6 +35,7 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
   "https://emp-management-weld.vercel.app",
+  "https://emp-management-aulwgluho-jayakrishnas-projects-9b5fa761.vercel.app",
 ];
 
 app.use(
